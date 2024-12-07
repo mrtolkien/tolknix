@@ -1,0 +1,188 @@
+# Start AeroSpace at login
+start-at-login = true
+
+# 'start-at-login' needs to be 'true' for 'after-login-command' to work
+after-login-command = []
+
+# 'after-startup-command' is run after 'after-login-command'
+after-startup-command = [
+    'exec-and-forget borders active_color=0xffe1e3e4 width=8.0 hidpi=on',
+    # TODO Re-add SketchyBar
+]
+
+
+# Normalizations. See: https://nikitabobko.github.io/AeroSpace/guide#normalization
+enable-normalization-flatten-containers = true
+enable-normalization-opposite-orientation-for-nested-containers = true
+
+# The 'accordion-padding' specifies the size of accordion padding
+accordion-padding = 15 # 0 to disable
+
+# Possible values: tiles|accordion
+default-root-container-layout = 'tiles'
+
+# Possible values: horizontal|vertical|auto
+# 'auto' means: wide monitor (anything wider than high) gets horizontal orientation,
+#               tall monitor (anything higher than wide) gets vertical orientation
+default-root-container-orientation = 'auto'
+
+# Focus
+# on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
+
+# You can effectively turn off macOS "Hide application" (cmd-h) feature by toggling this flag
+automatically-unhide-macos-hidden-apps = true
+
+[key-mapping]
+preset = 'qwerty'
+
+# Gaps between windows (inner-*) and between monitor edges (outer-*).
+# Possible values:
+# - Constant:     gaps.outer.top = 8
+# - Per monitor:  gaps.outer.top = [{ monitor.main = 16 }, { monitor."some-pattern" = 32 }, 24]
+#                 In this example, 24 is a default value when there is no match.
+#                 Monitor pattern is the same as for 'workspace-to-monitor-force-assignment'.
+#                 See: https://nikitabobko.github.io/AeroSpace/guide#assign-workspaces-to-monitors
+[gaps]
+inner.horizontal = 2
+inner.vertical = 2
+outer.left = 2
+outer.bottom = 2
+outer.top = 2
+outer.right = 2
+
+# Possible keys:
+# - Letters.        a, b, c, ..., z
+# - Numbers.        0, 1, 2, ..., 9
+# - Keypad numbers. keypad0, keypad1, keypad2, ..., keypad9
+# - F-keys.         f1, f2, ..., f20
+# - Special keys.   minus, equal, period, comma, slash, backslash, quote, semicolon, backtick,
+#                   leftSquareBracket, rightSquareBracket, space, enter, esc, backspace, tab
+# - Keypad special. keypadClear, keypadDecimalMark, keypadDivide, keypadEnter, keypadEqual,
+#                   keypadMinus, keypadMultiply, keypadPlus
+# - Arrows.         left, down, up, right
+# All possible modifiers: cmd, alt, ctrl, shift
+# All possible commands: https://nikitabobko.github.io/AeroSpace/commands
+# See: https://nikitabobko.github.io/AeroSpace/commands#exec-and-forget
+# You can uncomment the following lines to open up terminal with alt + enter shortcut (like in i3)
+# alt-enter = '''exec-and-forget osascript -e '
+# tell application "Terminal"
+#     do script
+#     activate
+# end tell'
+# '''
+
+# 'main' binding mode declaration
+# See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
+# 'main' binding mode must be always presented
+[mode.main.binding]
+#################
+# APPS
+#################
+ctrl-alt-a = 'exec-and-forget alacritty msg create-window || open -na alacritty'
+ctrl-alt-z = 'exec-and-forget open -n -a "Zen Browser"'
+ctrl-alt-v = 'exec-and-forget code -n || open -na "Visual Studio Code"'
+ctrl-alt-n = 'exec-and-forget open -a "Nimble Commander"'
+
+#################
+# FOCUS & MOVE
+#################
+shift-ctrl-alt-tab = 'focus-back-and-forth'
+shift-ctrl-alt-space = 'workspace-back-and-forth'
+shift-ctrl-alt-backspace = 'focus-monitor next --wrap-around'
+shift-ctrl-alt-quote = 'move-mouse window-lazy-center'
+
+shift-ctrl-alt-equal = 'fullscreen'
+shift-ctrl-alt-1 = 'move-workspace-to-monitor --wrap-around next'
+
+shift-ctrl-alt-rightSquareBracket = 'layout floating tiling' # Kinda unusable without Rectangle...
+shift-ctrl-alt-f20 = 'flatten-workspace-tree'                # Resets
+
+# See: https://nikitabobko.github.io/AeroSpace/commands#layout
+ctrl-alt-shift-slash = 'layout tiles horizontal vertical'
+ctrl-alt-shift-backslash = 'layout accordion horizontal vertical'
+
+# See: https://nikitabobko.github.io/AeroSpace/commands#focus
+ctrl-alt-shift-left = 'focus left'
+ctrl-alt-shift-down = 'focus down'
+ctrl-alt-shift-up = 'focus up'
+ctrl-alt-shift-right = 'focus right'
+
+# See: https://nikitabobko.github.io/AeroSpace/commands#move
+cmd-ctrl-alt-shift-left = 'move left'
+cmd-ctrl-alt-shift-down = 'move down'
+cmd-ctrl-alt-shift-up = 'move up'
+cmd-ctrl-alt-shift-right = 'move right'
+
+
+# See: https://nikitabobko.github.io/AeroSpace/commands#resize
+ctrl-alt-shift-minus = 'resize smart -100'    # 5% of total screen size
+ctrl-alt-shift-backtick = 'resize smart +100'
+
+#################
+# WORKSPACES
+#################
+# See: https://nikitabobko.github.io/AeroSpace/commands#workspace
+shift-ctrl-alt-a = 'workspace admin'
+shift-ctrl-alt-b = 'workspace b'
+shift-ctrl-alt-c = 'workspace code'
+shift-ctrl-alt-d = 'workspace d'
+shift-ctrl-alt-e = 'workspace e'
+shift-ctrl-alt-f = 'workspace files'
+shift-ctrl-alt-g = 'workspace g'
+shift-ctrl-alt-h = 'workspace h'
+shift-ctrl-alt-i = 'workspace internet'
+shift-ctrl-alt-j = 'workspace j'
+shift-ctrl-alt-k = 'workspace kode'
+shift-ctrl-alt-l = 'workspace l'
+shift-ctrl-alt-m = 'workspace messaging'
+shift-ctrl-alt-n = 'workspace notes'
+shift-ctrl-alt-o = 'workspace o'
+shift-ctrl-alt-p = 'workspace perso'
+shift-ctrl-alt-q = 'workspace q'
+shift-ctrl-alt-r = 'workspace r'
+shift-ctrl-alt-s = 'workspace slack'
+shift-ctrl-alt-t = 'workspace terminal'
+shift-ctrl-alt-u = 'workspace u'
+shift-ctrl-alt-v = 'workspace v'
+shift-ctrl-alt-w = 'workspace w'
+shift-ctrl-alt-x = 'workspace x'
+shift-ctrl-alt-y = 'workspace y'
+shift-ctrl-alt-z = 'workspace z'
+
+# See: https://nikitabobko.github.io/AeroSpace/commands#move-node-to-workspace
+cmd-shift-ctrl-alt-a = 'move-node-to-workspace admin'
+cmd-shift-ctrl-alt-b = 'move-node-to-workspace b'
+cmd-shift-ctrl-alt-c = 'move-node-to-workspace code'
+cmd-shift-ctrl-alt-d = 'move-node-to-workspace d'
+cmd-shift-ctrl-alt-e = 'move-node-to-workspace e'
+cmd-shift-ctrl-alt-f = 'move-node-to-workspace files'
+cmd-shift-ctrl-alt-g = 'move-node-to-workspace g'
+cmd-shift-ctrl-alt-h = 'move-node-to-workspace h'
+cmd-shift-ctrl-alt-i = 'move-node-to-workspace internet'
+cmd-shift-ctrl-alt-j = 'move-node-to-workspace j'
+cmd-shift-ctrl-alt-k = 'move-node-to-workspace kode'
+cmd-shift-ctrl-alt-l = 'move-node-to-workspace l'
+cmd-shift-ctrl-alt-m = 'move-node-to-workspace messaging'
+cmd-shift-ctrl-alt-n = 'move-node-to-workspace notes'
+cmd-shift-ctrl-alt-o = 'move-node-to-workspace o'
+cmd-shift-ctrl-alt-p = 'move-node-to-workspace perso'
+cmd-shift-ctrl-alt-q = 'move-node-to-workspace q'
+cmd-shift-ctrl-alt-r = 'move-node-to-workspace r'
+cmd-shift-ctrl-alt-s = 'move-node-to-workspace slack'
+cmd-shift-ctrl-alt-t = 'move-node-to-workspace terminal'
+cmd-shift-ctrl-alt-u = 'move-node-to-workspace u'
+cmd-shift-ctrl-alt-v = 'move-node-to-workspace v'
+cmd-shift-ctrl-alt-w = 'move-node-to-workspace w'
+cmd-shift-ctrl-alt-x = 'move-node-to-workspace x'
+cmd-shift-ctrl-alt-y = 'move-node-to-workspace y'
+cmd-shift-ctrl-alt-z = 'move-node-to-workspace z'
+
+# See: https://nikitabobko.github.io/AeroSpace/commands#mode
+ctrl-shift-alt-leftSquareBracket = 'mode join'
+
+
+[mode.join.binding]
+ctrl-alt-shift-left = ['join-with left', 'mode main']
+ctrl-alt-shift-down = ['join-with down', 'mode main']
+ctrl-alt-shift-up = ['join-with up', 'mode main']
+ctrl-alt-shift-right = ['join-with right', 'mode main']
