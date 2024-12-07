@@ -79,6 +79,7 @@ in
 
     atuin = {
       enable = true;
+      # enableZshIntegration = true;
     };
 
     neovim = {
@@ -136,6 +137,15 @@ in
           max_height = 1000;
         };
       };
+    };
+
+    bun = {
+      enable = true;
+    };
+
+    carapace = {
+      enable = true;
+      enableZshIntegration = true;
     };
 
   };

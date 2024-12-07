@@ -1,11 +1,13 @@
 { pkgs, ... }:
 
 {
-  environment.systemPackages = with pkgs; (import ./packages.nix { inherit pkgs; });
+  # Create /etc/zshrc that loads the nix-darwin environment.
+  programs.zsh.enable = true; # default shell on catalina
+  # programs.fish.enable = true;
 
   # Auto upgrade nix package and the daemon service.
   services.nix-daemon.enable = true;
-  # services.karabiner-elements.enable = true; TODO Make it work!
+  # services.karabiner-elements.enable = true;
   # nix.package = pkgs.nix;
 
   # Necessary for using flakes on this system.
@@ -16,10 +18,6 @@
     interval = { Weekday = 0; Hour = 23; Minute = 0; };
     options = "--delete-older-than 30d";
   };
-
-  # Create /etc/zshrc that loads the nix-darwin environment.
-  programs.zsh.enable = true; # default shell on catalina
-  # programs.fish.enable = true;
 
   # Enable fonts dir
   fonts.packages = with pkgs; [
