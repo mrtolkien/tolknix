@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   ###############################################
@@ -16,9 +16,7 @@
   home.stateVersion = "24.11"; # Please read the comment before changing.
 
   # Programs are packages that are also *configured* by Home Manager. 
-  imports = [
-    ./programs.nix
-  ];
+  programs = { } // import ./programs.nix { inherit config pkgs lib; };
 
   # Packages are just installed by Home Manager.
   home.packages = pkgs.callPackage ./packages.nix { };
