@@ -7,8 +7,7 @@
 
   # Auto upgrade nix package and the daemon service.
   services.nix-daemon.enable = true;
-  # services.karabiner-elements.enable = true;
-  # nix.package = pkgs.nix;
+  # TODO services.karabiner-elements.enable = true;
 
   # Necessary for using flakes on this system.
   nix.settings.experimental-features = "nix-command flakes";
@@ -36,10 +35,10 @@
     shell = pkgs.zsh;
   };
 
-  # MacOS specific configuration
   system = {
     stateVersion = 4;
 
+    # MacOS system configuration
     defaults = {
       NSGlobalDomain = {
         AppleShowAllExtensions = true;
@@ -74,7 +73,6 @@
 
     keyboard = {
       enableKeyMapping = true;
-      # remapCapsLockToControl = true;
     };
   };
 
