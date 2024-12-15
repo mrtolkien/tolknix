@@ -1,47 +1,28 @@
-# Start AeroSpace at login
+# Start
 start-at-login = true
-
-# 'start-at-login' needs to be 'true' for 'after-login-command' to work
 after-login-command = []
-
-# 'after-startup-command' is run after 'after-login-command'
 after-startup-command = [
     'exec-and-forget borders active_color=0xffe1e3e4 width=8.0 hidpi=on',
-    # TODO Re-add SketchyBar
+    'workspace internet',
 ]
 
-
-# Normalizations. See: https://nikitabobko.github.io/AeroSpace/guide#normalization
+# Globals
 enable-normalization-flatten-containers = true
 enable-normalization-opposite-orientation-for-nested-containers = true
-
-# The 'accordion-padding' specifies the size of accordion padding
-accordion-padding = 15 # 0 to disable
+accordion-padding = 15                                                 # 0 to disable
+automatically-unhide-macos-hidden-apps = true
 
 # Possible values: tiles|accordion
 default-root-container-layout = 'tiles'
-
-# Possible values: horizontal|vertical|auto
-# 'auto' means: wide monitor (anything wider than high) gets horizontal orientation,
-#               tall monitor (anything higher than wide) gets vertical orientation
 default-root-container-orientation = 'auto'
 
 # Focus
 # on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
 
-# You can effectively turn off macOS "Hide application" (cmd-h) feature by toggling this flag
-automatically-unhide-macos-hidden-apps = true
-
 [key-mapping]
 preset = 'qwerty'
 
 # Gaps between windows (inner-*) and between monitor edges (outer-*).
-# Possible values:
-# - Constant:     gaps.outer.top = 8
-# - Per monitor:  gaps.outer.top = [{ monitor.main = 16 }, { monitor."some-pattern" = 32 }, 24]
-#                 In this example, 24 is a default value when there is no match.
-#                 Monitor pattern is the same as for 'workspace-to-monitor-force-assignment'.
-#                 See: https://nikitabobko.github.io/AeroSpace/guide#assign-workspaces-to-monitors
 [gaps]
 inner.horizontal = 2
 inner.vertical = 2
@@ -49,6 +30,11 @@ outer.left = 2
 outer.bottom = 2
 outer.top = 2
 outer.right = 2
+
+
+[workspace-to-monitor-force-assignment]
+messaging = 'secondary'
+perso = 'secondary'
 
 # Possible keys:
 # - Letters.        a, b, c, ..., z
@@ -61,7 +47,11 @@ outer.right = 2
 #                   keypadMinus, keypadMultiply, keypadPlus
 # - Arrows.         left, down, up, right
 # All possible modifiers: cmd, alt, ctrl, shift
-# All possible commands: https://nikitabobko.github.io/AeroSpace/commands
+
+[mode.main.binding]
+#################
+# APPS
+#################
 # See: https://nikitabobko.github.io/AeroSpace/commands#exec-and-forget
 # You can uncomment the following lines to open up terminal with alt + enter shortcut (like in i3)
 # alt-enter = '''exec-and-forget osascript -e '
@@ -71,13 +61,6 @@ outer.right = 2
 # end tell'
 # '''
 
-# 'main' binding mode declaration
-# See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
-# 'main' binding mode must be always presented
-[mode.main.binding]
-#################
-# APPS
-#################
 ctrl-alt-a = 'exec-and-forget alacritty msg create-window || open -na alacritty'
 ctrl-alt-z = 'exec-and-forget open -n -a "Zen Browser"'
 ctrl-alt-v = 'exec-and-forget code -n || open -na "Visual Studio Code"'
@@ -86,7 +69,7 @@ ctrl-alt-n = 'exec-and-forget open -a "Nimble Commander"'
 #################
 # FOCUS & MOVE
 #################
-shift-ctrl-alt-tab = 'focus-back-and-forth'
+shift-ctrl-alt-tab = 'exec-and-forget aerospace list-workspaces --monitor focused --empty no | aerospace workspace next --wrap-around'
 shift-ctrl-alt-space = 'workspace-back-and-forth'
 shift-ctrl-alt-backspace = 'focus-monitor next --wrap-around'
 shift-ctrl-alt-quote = 'move-mouse window-lazy-center'
@@ -186,3 +169,35 @@ ctrl-alt-shift-left = ['join-with left', 'mode main']
 ctrl-alt-shift-down = ['join-with down', 'mode main']
 ctrl-alt-shift-up = ['join-with up', 'mode main']
 ctrl-alt-shift-right = ['join-with right', 'mode main']
+
+###########################################
+# Assign some apps to specific workspaces #
+###########################################
+[[on-window-detected]]
+if.app-id = 'com.tinyspeck.slackmacgap'
+# if.during-aerospace-startup = true
+run = ['move-node-to-workspace slack']
+
+[[on-window-detected]]
+if.app-id = 'com.todoist.mac.Todoist'
+run = ['move-node-to-workspace perso']
+
+[[on-window-detected]]
+if.app-id = 'com.hnc.Discord'
+run = ['move-node-to-workspace messaging']
+
+[[on-window-detected]]
+if.app-id = 'im.Beeper'
+run = ['move-node-to-workspace messaging']
+
+[[on-window-detected]]
+if.app-id = 'md.obsidian'
+run = ['move-node-to-workspace notes']
+
+[[on-window-detected]]
+if.app-id = 'com.cron.electron'
+run = ['move-node-to-workspace admin']
+
+[[on-window-detected]]
+if.app-id = 'com.readdle.SparkDesktop'
+run = ['move-node-to-workspace admin']
