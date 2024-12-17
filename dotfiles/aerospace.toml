@@ -69,6 +69,7 @@ ctrl-alt-n = 'exec-and-forget open -a "Nimble Commander"'
 #################
 # FOCUS & MOVE
 #################
+shift-ctrl-alt-f19 = 'focus-back-and-forth'
 shift-ctrl-alt-tab = 'exec-and-forget aerospace list-workspaces --monitor focused --empty no | aerospace workspace next --wrap-around'
 shift-ctrl-alt-space = 'workspace-back-and-forth'
 shift-ctrl-alt-backspace = 'focus-monitor next --wrap-around'
