@@ -28,5 +28,6 @@
     ".config/helix/config.toml".source = dotfiles/helix.toml;
     ".config/lsd/config.yaml".source = dotfiles/lsd.yaml;
     ".config/starship.toml".source = dotfiles/starship.toml;
+    ".config/ghostty/config".source = dotfiles/ghostty.conf;
   };
 }
