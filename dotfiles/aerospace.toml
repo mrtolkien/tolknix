@@ -33,8 +33,8 @@ outer.right = 2
 
 
 [workspace-to-monitor-force-assignment]
-messaging = 'secondary'
-perso = 'secondary'
+amis = 'secondary'
+slack = 'secondary'
 
 # Possible keys:
 # - Letters.        a, b, c, ..., z
@@ -106,26 +106,26 @@ ctrl-alt-shift-backtick = 'resize smart +100'
 # WORKSPACES
 #################
 # See: https://nikitabobko.github.io/AeroSpace/commands#workspace
-shift-ctrl-alt-a = 'workspace admin'
+shift-ctrl-alt-a = 'workspace amis'
 shift-ctrl-alt-b = 'workspace b'
 shift-ctrl-alt-c = 'workspace code'
 shift-ctrl-alt-d = 'workspace d'
 shift-ctrl-alt-e = 'workspace e'
-shift-ctrl-alt-f = 'workspace files'
+shift-ctrl-alt-f = 'workspace f'
 shift-ctrl-alt-g = 'workspace g'
 shift-ctrl-alt-h = 'workspace h'
-shift-ctrl-alt-i = 'workspace internet'
+shift-ctrl-alt-i = 'workspace i'
 shift-ctrl-alt-j = 'workspace j'
 shift-ctrl-alt-k = 'workspace kode'
 shift-ctrl-alt-l = 'workspace l'
-shift-ctrl-alt-m = 'workspace messaging'
+shift-ctrl-alt-m = 'workspace m'
 shift-ctrl-alt-n = 'workspace notes'
 shift-ctrl-alt-o = 'workspace o'
-shift-ctrl-alt-p = 'workspace perso'
+shift-ctrl-alt-p = 'workspace p'
 shift-ctrl-alt-q = 'workspace q'
 shift-ctrl-alt-r = 'workspace r'
 shift-ctrl-alt-s = 'workspace slack'
-shift-ctrl-alt-t = 'workspace terminal'
+shift-ctrl-alt-t = 'workspace t'
 shift-ctrl-alt-u = 'workspace u'
 shift-ctrl-alt-v = 'workspace v'
 shift-ctrl-alt-w = 'workspace w'
@@ -134,26 +134,26 @@ shift-ctrl-alt-y = 'workspace y'
 shift-ctrl-alt-z = 'workspace z'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#move-node-to-workspace
-cmd-shift-ctrl-alt-a = 'move-node-to-workspace admin'
+cmd-shift-ctrl-alt-a = 'move-node-to-workspace amis'
 cmd-shift-ctrl-alt-b = 'move-node-to-workspace b'
 cmd-shift-ctrl-alt-c = 'move-node-to-workspace code'
 cmd-shift-ctrl-alt-d = 'move-node-to-workspace d'
 cmd-shift-ctrl-alt-e = 'move-node-to-workspace e'
-cmd-shift-ctrl-alt-f = 'move-node-to-workspace files'
+cmd-shift-ctrl-alt-f = 'move-node-to-workspace f'
 cmd-shift-ctrl-alt-g = 'move-node-to-workspace g'
 cmd-shift-ctrl-alt-h = 'move-node-to-workspace h'
-cmd-shift-ctrl-alt-i = 'move-node-to-workspace internet'
+cmd-shift-ctrl-alt-i = 'move-node-to-workspace i'
 cmd-shift-ctrl-alt-j = 'move-node-to-workspace j'
 cmd-shift-ctrl-alt-k = 'move-node-to-workspace kode'
 cmd-shift-ctrl-alt-l = 'move-node-to-workspace l'
-cmd-shift-ctrl-alt-m = 'move-node-to-workspace messaging'
+cmd-shift-ctrl-alt-m = 'move-node-to-workspace m'
 cmd-shift-ctrl-alt-n = 'move-node-to-workspace notes'
 cmd-shift-ctrl-alt-o = 'move-node-to-workspace o'
-cmd-shift-ctrl-alt-p = 'move-node-to-workspace perso'
+cmd-shift-ctrl-alt-p = 'move-node-to-workspace p'
 cmd-shift-ctrl-alt-q = 'move-node-to-workspace q'
 cmd-shift-ctrl-alt-r = 'move-node-to-workspace r'
 cmd-shift-ctrl-alt-s = 'move-node-to-workspace slack'
-cmd-shift-ctrl-alt-t = 'move-node-to-workspace terminal'
+cmd-shift-ctrl-alt-t = 'move-node-to-workspace t'
 cmd-shift-ctrl-alt-u = 'move-node-to-workspace u'
 cmd-shift-ctrl-alt-v = 'move-node-to-workspace v'
 cmd-shift-ctrl-alt-w = 'move-node-to-workspace w'
@@ -181,15 +181,15 @@ run = ['move-node-to-workspace slack']
 
 [[on-window-detected]]
 if.app-id = 'com.todoist.mac.Todoist'
-run = ['move-node-to-workspace perso']
+run = ['move-node-to-workspace zen']
 
 [[on-window-detected]]
 if.app-id = 'com.hnc.Discord'
-run = ['move-node-to-workspace messaging']
+run = ['move-node-to-workspace amis']
 
 [[on-window-detected]]
 if.app-id = 'im.Beeper'
-run = ['move-node-to-workspace messaging']
+run = ['move-node-to-workspace amis']
 
 [[on-window-detected]]
 if.app-id = 'md.obsidian'
@@ -197,8 +197,8 @@ run = ['move-node-to-workspace notes']
 
 [[on-window-detected]]
 if.app-id = 'com.cron.electron'
-run = ['move-node-to-workspace admin']
+run = ['move-node-to-workspace zen']
 
 [[on-window-detected]]
 if.app-id = 'com.readdle.SparkDesktop'
-run = ['move-node-to-workspace admin']
+run = ['move-node-to-workspace slack']
