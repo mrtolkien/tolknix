@@ -181,7 +181,7 @@ run = ['move-node-to-workspace slack']
 
 [[on-window-detected]]
 if.app-id = 'com.todoist.mac.Todoist'
-run = ['move-node-to-workspace zen']
+run = ['move-node-to-workspace z']
 
 [[on-window-detected]]
 if.app-id = 'com.hnc.Discord'
@@ -197,7 +197,7 @@ run = ['move-node-to-workspace notes']
 
 [[on-window-detected]]
 if.app-id = 'com.cron.electron'
-run = ['move-node-to-workspace zen']
+run = ['move-node-to-workspace z']
 
 [[on-window-detected]]
 if.app-id = 'com.readdle.SparkDesktop'
