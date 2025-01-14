@@ -19,6 +19,7 @@ with pkgs; [
   bat
   less
   tealdeer
+  rclone
 
   # CLI tools
   pandoc
