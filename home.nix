@@ -25,7 +25,8 @@
   home.file = {
     ".aerospace.toml".source = dotfiles/aerospace.toml;
     ".config/alacritty/alacritty.toml".source = dotfiles/alacritty.toml;
-    ".config/helix/config.toml".source = dotfiles/helix.toml;
+    ".config/helix/config.toml".source = dotfiles/helix/config.toml;
+    ".config/helix/languages.toml".source = dotfiles/helix/languages.toml;
     ".config/lsd/config.yaml".source = dotfiles/lsd.yaml;
     ".config/starship.toml".source = dotfiles/starship.toml;
     ".config/ghostty/config".source = dotfiles/ghostty.conf;
