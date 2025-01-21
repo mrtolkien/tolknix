@@ -32,8 +32,8 @@ with pkgs; [
   bacon
 
   # Build and deploy
-  docker
-  docker-compose
+  # docker
+  # docker-compose
   awscli2
   gh
   git-open
