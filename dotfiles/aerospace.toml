@@ -63,7 +63,7 @@ slack = 'secondary'
 ctrl-alt-a = 'exec-and-forget alacritty msg create-window || open -na alacritty'
 ctrl-alt-g = 'exec-and-forget open -a "Ghostty" ~'
 ctrl-alt-z = 'exec-and-forget open -a "Zen Browser"'
-ctrl-alt-w = 'exec-and-forget open -a "Firefox"'
+ctrl-alt-w = 'exec-and-forget open -n -a "Firefox"'
 # ctrl-alt-v = 'exec-and-forget code -n || open -na "Visual Studio Code"'
 # ctrl-alt-n = 'exec-and-forget open -a "Nimble Commander"'
 
