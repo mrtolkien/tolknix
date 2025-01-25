@@ -39,7 +39,8 @@ in
       export PATH=$HOME/.local/bin:$PATH
       # export PATH=$HOME/.cargo/bin:$PATH
       export PATH=/opt/homebrew/bin/:$PATH
-      export PATH="$HOME/.bun:$PATH"
+      export BUN_INSTALL="$HOME/.bun" 
+      export PATH="$BUN_INSTALL/bin:$PATH"
 
       # Remove history data we don't want to see
       export HISTIGNORE="pwd:ls:cd"
@@ -136,10 +137,6 @@ in
         max_height = 1000;
       };
     };
-  };
-
-  bun = {
-    enable = true;
   };
 
   carapace = {
