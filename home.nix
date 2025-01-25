@@ -30,6 +30,6 @@
     ".config/lsd/config.yaml".source = dotfiles/lsd.yaml;
     ".config/starship.toml".source = dotfiles/starship.toml;
     ".config/ghostty/config".source = dotfiles/ghostty.conf;
-    ".config/lazygit/config.yml".source = dotfiles/lazygit.yml;
+    "~/Library/Application\ Support/lazygit/config.yml".source = dotfiles/lazygit.yml;
   };
 }
