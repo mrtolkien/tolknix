@@ -50,7 +50,7 @@ in
       # zsh-vi-mode + rye
       source ${pkgs.zsh-vi-mode}/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh
       zvm_after_init_commands+=(eval "$(atuin init zsh)")
-      source "$HOME/.rye/env"
+      # source "$HOME/.rye/env"
       source "$HOME/.cargo/env"
     '';
   };
