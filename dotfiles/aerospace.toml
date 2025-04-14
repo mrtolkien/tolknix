@@ -2,8 +2,7 @@
 start-at-login = true
 after-login-command = []
 after-startup-command = [
-    'exec-and-forget borders active_color=0xffe1e3e4 width=8.0 hidpi=on',
-    'workspace internet',
+    # 'exec-and-forget borders active_color=0xffe1e3e4 width=8.0 hidpi=on'
 ]
 
 # Globals
@@ -14,6 +13,9 @@ automatically-unhide-macos-hidden-apps = true
 
 # Possible values: tiles|accordion
 default-root-container-layout = 'tiles'
+# Possible values: horizontal|vertical|auto
+# 'auto' means: wide monitor (anything wider than high) gets horizontal orientation,
+#               tall monitor (anything higher than wide) gets vertical orientation
 default-root-container-orientation = 'auto'
 
 # Focus
@@ -31,10 +33,9 @@ outer.bottom = 2
 outer.top = 2
 outer.right = 2
 
-
 [workspace-to-monitor-force-assignment]
-amis = 'secondary'
-slack = 'secondary'
+# amis = 'secondary'
+# slack = 'secondary'
 
 # Possible keys:
 # - Letters.        a, b, c, ..., z
@@ -70,14 +71,22 @@ ctrl-alt-w = 'exec-and-forget open -n -a "Firefox"'
 #################
 # FOCUS & MOVE
 #################
+# See: https://nikitabobko.github.io/AeroSpace/commands#focus
+ctrl-alt-shift-left = 'focus left --boundaries all-monitors-outer-frame --boundaries-action wrap-around-all-monitors'
+ctrl-alt-shift-down = 'focus down --boundaries all-monitors-outer-frame --boundaries-action wrap-around-all-monitors'
+ctrl-alt-shift-up = 'focus up --boundaries all-monitors-outer-frame --boundaries-action wrap-around-all-monitors'
+ctrl-alt-shift-right = 'focus right --boundaries all-monitors-outer-frame --boundaries-action wrap-around-all-monitors'
+
+# TODO Remove?
 shift-ctrl-alt-f19 = 'focus-back-and-forth'
 shift-ctrl-alt-tab = 'exec-and-forget aerospace list-workspaces --monitor focused --empty no | aerospace workspace next --wrap-around'
 shift-ctrl-alt-space = 'workspace-back-and-forth'
 shift-ctrl-alt-backspace = 'focus-monitor next --wrap-around'
+shift-ctrl-alt-1 = 'move-workspace-to-monitor --wrap-around next'
+
 shift-ctrl-alt-quote = 'move-mouse window-lazy-center'
 
 shift-ctrl-alt-equal = 'fullscreen'
-shift-ctrl-alt-1 = 'move-workspace-to-monitor --wrap-around next'
 
 shift-ctrl-alt-rightSquareBracket = 'layout floating tiling' # Kinda unusable without Rectangle...
 shift-ctrl-alt-f20 = 'flatten-workspace-tree'                # Resets
@@ -86,20 +95,14 @@ shift-ctrl-alt-f20 = 'flatten-workspace-tree'                # Resets
 ctrl-alt-shift-slash = 'layout tiles horizontal vertical'
 ctrl-alt-shift-backslash = 'layout accordion horizontal vertical'
 
-# See: https://nikitabobko.github.io/AeroSpace/commands#focus
-ctrl-alt-shift-left = 'focus left'
-ctrl-alt-shift-down = 'focus down'
-ctrl-alt-shift-up = 'focus up'
-ctrl-alt-shift-right = 'focus right'
-
 # See: https://nikitabobko.github.io/AeroSpace/commands#move
 cmd-ctrl-alt-shift-left = 'move left'
 cmd-ctrl-alt-shift-down = 'move down'
 cmd-ctrl-alt-shift-up = 'move up'
 cmd-ctrl-alt-shift-right = 'move right'
 
-
 # See: https://nikitabobko.github.io/AeroSpace/commands#resize
+# TODO Use plus/minus
 ctrl-alt-shift-minus = 'resize smart -100'    # 5% of total screen size
 ctrl-alt-shift-backtick = 'resize smart +100'
 
@@ -165,7 +168,6 @@ cmd-shift-ctrl-alt-z = 'move-node-to-workspace z'
 # See: https://nikitabobko.github.io/AeroSpace/commands#mode
 ctrl-shift-alt-leftSquareBracket = 'mode join'
 
-
 [mode.join.binding]
 ctrl-alt-shift-left = ['join-with left', 'mode main']
 ctrl-alt-shift-down = ['join-with down', 'mode main']
@@ -176,13 +178,8 @@ ctrl-alt-shift-right = ['join-with right', 'mode main']
 # Assign some apps to specific workspaces #
 ###########################################
 [[on-window-detected]]
-if.app-id = 'com.tinyspeck.slackmacgap'
-# if.during-aerospace-startup = true
-run = ['move-node-to-workspace slack']
-
-[[on-window-detected]]
 if.app-id = 'com.todoist.mac.Todoist'
-run = ['move-node-to-workspace z']
+run = ['move-node-to-workspace amis']
 
 [[on-window-detected]]
 if.app-id = 'com.hnc.Discord'
@@ -197,9 +194,14 @@ if.app-id = 'md.obsidian'
 run = ['move-node-to-workspace notes']
 
 [[on-window-detected]]
+if.app-id = 'com.tinyspeck.slackmacgap'
+# if.during-aerospace-startup = true
+run = ['move-node-to-workspace slack']
+
+[[on-window-detected]]
 if.app-id = 'com.cron.electron'
 run = ['move-node-to-workspace z']
 
 [[on-window-detected]]
 if.app-id = 'com.readdle.SparkDesktop'
-run = ['move-node-to-workspace slack']
+run = ['move-node-to-workspace z']

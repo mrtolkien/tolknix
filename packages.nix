@@ -39,7 +39,7 @@ with pkgs; [
   git-open
 
   # Data
-  postgresql_16
+  postgresql_17
   dbmate
 
   # Nix
@@ -69,7 +69,4 @@ with pkgs; [
 
   # Encryption and security tools
   age
-
-  # TO REMOVE
-  poetry
 ]
