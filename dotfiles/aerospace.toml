@@ -66,14 +66,14 @@ ctrl-alt-shift-down = 'focus down --boundaries all-monitors-outer-frame --bounda
 ctrl-alt-shift-up = 'focus up --boundaries all-monitors-outer-frame --boundaries-action wrap-around-all-monitors'
 ctrl-alt-shift-right = 'focus right --boundaries all-monitors-outer-frame --boundaries-action wrap-around-all-monitors'
 
-shift-ctrl-alt-tab = 'workspace next --wrap-around'
-cmd-shift-ctrl-alt-tab = 'workspace prev --wrap-around'
+# Next non-empty workspace
+shift-ctrl-alt-tab = 'exec-and-forget aerospace list-workspaces --monitor focused --empty no | aerospace workspace next --wrap-around'
+cmd-shift-ctrl-alt-tab = 'exec-and-forget aerospace list-workspaces --monitor focused --empty no | aerospace workspace prev --wrap-around'
 
 shift-ctrl-alt-space = 'workspace-back-and-forth'
-
+shift-ctrl-alt-backspace = 'focus-monitor next --wrap-around'
 
 shift-ctrl-alt-quote = 'move-mouse window-lazy-center'
-
 shift-ctrl-alt-equal = 'fullscreen'
 
 shift-ctrl-alt-rightSquareBracket = 'layout floating tiling' # Kinda unusable without Rectangle...
@@ -145,7 +145,7 @@ ctrl-alt-shift-left = ['join-with left', 'mode main']
 ctrl-alt-shift-down = ['join-with down', 'mode main']
 ctrl-alt-shift-up = ['join-with up', 'mode main']
 ctrl-alt-shift-right = ['join-with right', 'mode main']
-ctrl-shift-alt-leftSquareBracket = 'balance-sizes'
+ctrl-shift-alt-leftSquareBracket = ['balance-sizes', 'mode main']
 
 ###########################################
 # Assign some apps to specific workspaces #
