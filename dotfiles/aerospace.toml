@@ -1,9 +1,7 @@
 # Start
 start-at-login = true
 after-login-command = []
-after-startup-command = [
-    # 'exec-and-forget borders active_color=0xffe1e3e4 width=8.0 hidpi=on'
-]
+after-startup-command = []
 
 # Globals
 enable-normalization-flatten-containers = true
@@ -13,9 +11,6 @@ automatically-unhide-macos-hidden-apps = true
 
 # Possible values: tiles|accordion
 default-root-container-layout = 'tiles'
-# Possible values: horizontal|vertical|auto
-# 'auto' means: wide monitor (anything wider than high) gets horizontal orientation,
-#               tall monitor (anything higher than wide) gets vertical orientation
 default-root-container-orientation = 'auto'
 
 # Focus
@@ -32,10 +27,6 @@ outer.left = 2
 outer.bottom = 2
 outer.top = 2
 outer.right = 2
-
-[workspace-to-monitor-force-assignment]
-# amis = 'secondary'
-# slack = 'secondary'
 
 # Possible keys:
 # - Letters.        a, b, c, ..., z
@@ -61,12 +52,10 @@ outer.right = 2
 #     activate
 # end tell'
 # '''
-ctrl-alt-a = 'exec-and-forget alacritty msg create-window || open -na alacritty'
 ctrl-alt-g = 'exec-and-forget open -a "Ghostty" ~'
 ctrl-alt-z = 'exec-and-forget open -a "Zen Browser"'
 ctrl-alt-w = 'exec-and-forget open -n -a "Firefox"'
-# ctrl-alt-v = 'exec-and-forget code -n || open -na "Visual Studio Code"'
-# ctrl-alt-n = 'exec-and-forget open -a "Nimble Commander"'
+ctrl-alt-v = 'exec-and-forget code -n || open -na "Visual Studio Code"'
 
 #################
 # FOCUS & MOVE
@@ -77,12 +66,11 @@ ctrl-alt-shift-down = 'focus down --boundaries all-monitors-outer-frame --bounda
 ctrl-alt-shift-up = 'focus up --boundaries all-monitors-outer-frame --boundaries-action wrap-around-all-monitors'
 ctrl-alt-shift-right = 'focus right --boundaries all-monitors-outer-frame --boundaries-action wrap-around-all-monitors'
 
-# TODO Remove?
-shift-ctrl-alt-f19 = 'focus-back-and-forth'
-shift-ctrl-alt-tab = 'exec-and-forget aerospace list-workspaces --monitor focused --empty no | aerospace workspace next --wrap-around'
+shift-ctrl-alt-tab = 'workspace next --wrap-around'
+cmd-shift-ctrl-alt-tab = 'workspace prev --wrap-around'
+
 shift-ctrl-alt-space = 'workspace-back-and-forth'
-shift-ctrl-alt-backspace = 'focus-monitor next --wrap-around'
-shift-ctrl-alt-1 = 'move-workspace-to-monitor --wrap-around next'
+
 
 shift-ctrl-alt-quote = 'move-mouse window-lazy-center'
 
@@ -109,61 +97,45 @@ ctrl-alt-shift-backtick = 'resize smart +100'
 #################
 # WORKSPACES
 #################
+shift-ctrl-alt-1 = 'move-workspace-to-monitor --wrap-around next'
+
 # See: https://nikitabobko.github.io/AeroSpace/commands#workspace
-shift-ctrl-alt-a = 'workspace amis'
-shift-ctrl-alt-b = 'workspace b'
-shift-ctrl-alt-c = 'workspace code'
-shift-ctrl-alt-d = 'workspace d'
-shift-ctrl-alt-e = 'workspace e'
-shift-ctrl-alt-f = 'workspace f'
-shift-ctrl-alt-g = 'workspace g'
-shift-ctrl-alt-h = 'workspace h'
-shift-ctrl-alt-i = 'workspace i'
-shift-ctrl-alt-j = 'workspace j'
-shift-ctrl-alt-k = 'workspace kode'
-shift-ctrl-alt-l = 'workspace l'
-shift-ctrl-alt-m = 'workspace m'
-shift-ctrl-alt-n = 'workspace notes'
-shift-ctrl-alt-o = 'workspace o'
-shift-ctrl-alt-p = 'workspace p'
-shift-ctrl-alt-q = 'workspace q'
-shift-ctrl-alt-r = 'workspace r'
-shift-ctrl-alt-s = 'workspace slack'
-shift-ctrl-alt-t = 'workspace t'
-shift-ctrl-alt-u = 'workspace u'
-shift-ctrl-alt-v = 'workspace v'
-shift-ctrl-alt-w = 'workspace w'
-shift-ctrl-alt-x = 'workspace x'
-shift-ctrl-alt-y = 'workspace y'
-shift-ctrl-alt-z = 'workspace z'
+shift-ctrl-alt-f1 = 'workspace 0-0'
+shift-ctrl-alt-f2 = 'workspace 1-0'
+shift-ctrl-alt-f3 = 'workspace 2-0'
+shift-ctrl-alt-f4 = 'workspace 3-0'
+shift-ctrl-alt-f5 = 'workspace 4-0'
+shift-ctrl-alt-f6 = 'workspace 0-1'
+shift-ctrl-alt-f7 = 'workspace 1-1'
+shift-ctrl-alt-f8 = 'workspace 2-1'
+shift-ctrl-alt-f9 = 'workspace 3-1'
+shift-ctrl-alt-f10 = 'workspace 4-1'
+shift-ctrl-alt-f11 = 'workspace 0-2'
+shift-ctrl-alt-f12 = 'workspace 1-2'
+shift-ctrl-alt-f13 = 'workspace 2-2'
+shift-ctrl-alt-f16 = 'workspace 3-2'
+shift-ctrl-alt-f17 = 'workspace 4-2'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#move-node-to-workspace
-cmd-shift-ctrl-alt-a = 'move-node-to-workspace amis'
-cmd-shift-ctrl-alt-b = 'move-node-to-workspace b'
-cmd-shift-ctrl-alt-c = 'move-node-to-workspace code'
-cmd-shift-ctrl-alt-d = 'move-node-to-workspace d'
-cmd-shift-ctrl-alt-e = 'move-node-to-workspace e'
-cmd-shift-ctrl-alt-f = 'move-node-to-workspace f'
-cmd-shift-ctrl-alt-g = 'move-node-to-workspace g'
-cmd-shift-ctrl-alt-h = 'move-node-to-workspace h'
-cmd-shift-ctrl-alt-i = 'move-node-to-workspace i'
-cmd-shift-ctrl-alt-j = 'move-node-to-workspace j'
-cmd-shift-ctrl-alt-k = 'move-node-to-workspace kode'
-cmd-shift-ctrl-alt-l = 'move-node-to-workspace l'
-cmd-shift-ctrl-alt-m = 'move-node-to-workspace m'
-cmd-shift-ctrl-alt-n = 'move-node-to-workspace notes'
-cmd-shift-ctrl-alt-o = 'move-node-to-workspace o'
-cmd-shift-ctrl-alt-p = 'move-node-to-workspace p'
-cmd-shift-ctrl-alt-q = 'move-node-to-workspace q'
-cmd-shift-ctrl-alt-r = 'move-node-to-workspace r'
-cmd-shift-ctrl-alt-s = 'move-node-to-workspace slack'
-cmd-shift-ctrl-alt-t = 'move-node-to-workspace t'
-cmd-shift-ctrl-alt-u = 'move-node-to-workspace u'
-cmd-shift-ctrl-alt-v = 'move-node-to-workspace v'
-cmd-shift-ctrl-alt-w = 'move-node-to-workspace w'
-cmd-shift-ctrl-alt-x = 'move-node-to-workspace x'
-cmd-shift-ctrl-alt-y = 'move-node-to-workspace y'
-cmd-shift-ctrl-alt-z = 'move-node-to-workspace z'
+cmd-shift-ctrl-alt-f1 = 'move-node-to-workspace 0-0'
+cmd-shift-ctrl-alt-f2 = 'move-node-to-workspace 1-0'
+cmd-shift-ctrl-alt-f3 = 'move-node-to-workspace 2-0'
+cmd-shift-ctrl-alt-f4 = 'move-node-to-workspace 3-0'
+cmd-shift-ctrl-alt-f5 = 'move-node-to-workspace 4-0'
+cmd-shift-ctrl-alt-f6 = 'move-node-to-workspace 0-1'
+cmd-shift-ctrl-alt-f7 = 'move-node-to-workspace 1-1'
+cmd-shift-ctrl-alt-f8 = 'move-node-to-workspace 2-1'
+cmd-shift-ctrl-alt-f9 = 'move-node-to-workspace 3-1'
+cmd-shift-ctrl-alt-f10 = 'move-node-to-workspace 4-1'
+cmd-shift-ctrl-alt-f11 = 'move-node-to-workspace 0-2'
+cmd-shift-ctrl-alt-f12 = 'move-node-to-workspace 1-2'
+cmd-shift-ctrl-alt-f13 = 'move-node-to-workspace 2-2'
+cmd-shift-ctrl-alt-f16 = 'move-node-to-workspace 3-2'
+cmd-shift-ctrl-alt-f17 = 'move-node-to-workspace 4-2'
+
+#################
+# MODES
+#################
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#mode
 ctrl-shift-alt-leftSquareBracket = 'mode join'
@@ -173,35 +145,36 @@ ctrl-alt-shift-left = ['join-with left', 'mode main']
 ctrl-alt-shift-down = ['join-with down', 'mode main']
 ctrl-alt-shift-up = ['join-with up', 'mode main']
 ctrl-alt-shift-right = ['join-with right', 'mode main']
+ctrl-shift-alt-leftSquareBracket = 'balance-sizes'
 
 ###########################################
 # Assign some apps to specific workspaces #
 ###########################################
 [[on-window-detected]]
 if.app-id = 'com.todoist.mac.Todoist'
-run = ['move-node-to-workspace amis']
+run = ['move-node-to-workspace 1-0']
 
 [[on-window-detected]]
 if.app-id = 'com.hnc.Discord'
-run = ['move-node-to-workspace amis']
+run = ['move-node-to-workspace 1-0']
 
 [[on-window-detected]]
 if.app-id = 'im.Beeper'
-run = ['move-node-to-workspace amis']
+run = ['move-node-to-workspace 1-0']
 
 [[on-window-detected]]
 if.app-id = 'md.obsidian'
-run = ['move-node-to-workspace notes']
+run = ['move-node-to-workspace 2-0']
 
 [[on-window-detected]]
 if.app-id = 'com.tinyspeck.slackmacgap'
 # if.during-aerospace-startup = true
-run = ['move-node-to-workspace slack']
+run = ['move-node-to-workspace 1-1']
 
 [[on-window-detected]]
 if.app-id = 'com.cron.electron'
-run = ['move-node-to-workspace z']
+run = ['move-node-to-workspace 1-2']
 
 [[on-window-detected]]
 if.app-id = 'com.readdle.SparkDesktop'
-run = ['move-node-to-workspace z']
+run = ['move-node-to-workspace 1-2']
