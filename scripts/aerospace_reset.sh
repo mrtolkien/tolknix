@@ -14,8 +14,9 @@ LAYOUT_DATA="""
 Beeper | com.automattic.beeper.desktop | 1-0
 Code | com.microsoft.VSCode | 3-1
 Discord | com.hnc.Discord | 1-0
+Obsidian | md.obsidian | 2-0
 Firefox | org.mozilla.firefox | 2-1
-Ghostty | com.mitchellh.ghostty | 2-0
+Ghostty | com.mitchellh.ghostty | 3-0
 Notion Calendar | com.cron.electron | 1-2
 Slack | com.tinyspeck.slackmacgap | 1-1
 Spark Desktop | com.readdle.SparkDesktop | 1-2
