@@ -31,5 +31,7 @@
     ".config/starship.toml".source = dotfiles/starship.toml;
     ".config/ghostty/config".source = dotfiles/ghostty.conf;
     "Library/Application Support/lazygit/config.yml".source = dotfiles/lazygit.yml;
+    "scripts/aerospace_horizontal.sh".source = scripts/aerospace_horizontal.sh;
+    "scripts/aerospace_reset.sh".source = scripts/aerospace_reset.sh;
   };
 }
