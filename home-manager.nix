@@ -22,21 +22,22 @@ in
       set -gx HISTIGNORE "pwd:ls:cd"
 
       # Add paths using fish_add_path (preferred method)
-      fish_add_path ~/.pnpm-packages/bin
-      fish_add_path ~/.pnpm-packages
-      fish_add_path ~/.npm-packages/bin
-      fish_add_path $BUN_INSTALL/bin
-
-      fish_add_path ~/bin
-      fish_add_path ~/.local/share/bin
-      fish_add_path ~/.local/bin
-
-      fish_add_path /opt/homebrew/bin
-
-      fish_add_path ~/Development/flutter/bin
+      fish_add_path $BUN_INSTALL/bin # bun
+      fish_add_path ~/.local/bin # uvx
+      fish_add_path /opt/homebrew/bin # brew
+      fish_add_path ~/Development/flutter/bin # flutter
     '';
 
   };
+
+  fzf.enable = true;
+  lsd.enable = true;
+  direnv.enable = true;
+  zellij.enable = true;
+  zoxide.enable = true;
+  starship.enable = true;
+  carapace.enable = true;
+  tealdeer.enable = true;
 
   git = {
     enable = true;
@@ -75,35 +76,6 @@ in
     vimAlias = true;
   };
 
-  fzf = {
-    enable = true;
-  };
-
-  lsd = {
-    enable = true;
-  };
-
-  direnv = {
-    enable = true;
-  };
-
-  tealdeer = {
-    enable = true;
-    settings.display.compact = true;
-  };
-
-  zellij = {
-    enable = true;
-  };
-
-  zoxide = {
-    enable = true;
-  };
-
-  starship = {
-    enable = true;
-  };
-
   yazi = {
     enable = true;
     shellWrapperName = "y";
@@ -117,10 +89,6 @@ in
         max_height = 1000;
       };
     };
-  };
-
-  carapace = {
-    enable = true;
   };
 
 }
