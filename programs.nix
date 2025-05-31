@@ -44,6 +44,9 @@ in
 
       # Remove history data we don't want to see
       export HISTIGNORE="pwd:ls:cd"
+
+      # Flutter
+      export PATH="$HOME/Development/flutter/bin:$PATH"
     '';
 
     initExtra = ''

@@ -53,6 +53,9 @@ with pkgs; [
   # Go
   go
 
+  # Flutter
+  cocoapods
+
   # CPP
   cmake
 
