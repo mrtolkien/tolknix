@@ -16,7 +16,9 @@
   home.stateVersion = "24.11"; # Please read the comment before changing.
 
   # Programs are packages that are also *configured* by Home Manager. 
-  programs = { } // import ./programs.nix { inherit config pkgs lib; };
+  programs = { } // import ./home-manager.nix { inherit config pkgs lib; };
+
+  home.shell.enableFishIntegration = true;
 
   # Packages are just installed by Home Manager.
   home.packages = pkgs.callPackage ./packages.nix { };

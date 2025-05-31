@@ -1,4 +1,4 @@
-format = '$os$all'
+format = '$os$shell$all'
 # command_timeout = 1000
 
 # Replace the '❯' symbol in the prompt with '➜'

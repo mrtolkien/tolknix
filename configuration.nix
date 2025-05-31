@@ -1,18 +1,11 @@
 { pkgs, ... }:
 
 {
-  # Create /etc/zshrc that loads the nix-darwin environment.
-  programs.zsh.enable = true; # default shell on catalina
-  # programs.fish.enable = true;
-
-  # Auto upgrade nix package and the daemon service.
-  services.nix-daemon.enable = true;
-  # TODO services.karabiner-elements.enable = true;
 
   # Necessary for using flakes on this system.
+  nix.enable = true;
   nix.settings.experimental-features = "nix-command flakes";
   nix.gc = {
-    user = "root";
     automatic = true;
     interval = { Weekday = 0; Hour = 23; Minute = 0; };
     options = "--delete-older-than 30d";
@@ -29,13 +22,18 @@
   nixpkgs.hostPlatform = "aarch64-darwin";
   nixpkgs.config.allowUnfree = true;
 
+  programs.fish.enable = true;
+  environment.shells = [ pkgs.fish ];
+  # TODO services.karabiner-elements.enable = true;
+
   users.users.tolki = {
     name = "tolki";
     home = "/Users/tolki";
-    shell = pkgs.zsh;
+    shell = pkgs.fish;
   };
 
   system = {
+    primaryUser = "tolki";
     stateVersion = 4;
 
     # MacOS system configuration
