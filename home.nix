@@ -25,7 +25,6 @@
 
   # Dotfiles to configure some packages
   home.file = {
-    ".aerospace.toml".source = dotfiles/aerospace.toml;
     ".config/alacritty/alacritty.toml".source = dotfiles/alacritty.toml;
     ".config/helix/config.toml".source = dotfiles/helix/config.toml;
     ".config/helix/languages.toml".source = dotfiles/helix/languages.toml;

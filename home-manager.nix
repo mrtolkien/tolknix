@@ -39,6 +39,11 @@ in
   carapace.enable = true;
   tealdeer.enable = true;
 
+  aerospace = {
+    enable = true;
+    userSettings = builtins.fromTOML (builtins.readFile ./dotfiles/aerospace.toml);
+  };
+
   git = {
     enable = true;
     ignores = [ "*.swp" ];
