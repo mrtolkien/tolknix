@@ -35,13 +35,25 @@ in
   direnv.enable = true;
   zellij.enable = true;
   zoxide.enable = true;
-  starship.enable = true;
   carapace.enable = true;
   tealdeer.enable = true;
+  lazygit.enable = true;
 
   aerospace = {
     enable = true;
     userSettings = builtins.fromTOML (builtins.readFile ./dotfiles/aerospace.toml);
+  };
+
+  starship = {
+    enable = true;
+    enableTransience = true;
+    settings = builtins.fromTOML (builtins.readFile ./dotfiles/starship.toml);
+  };
+
+  helix = {
+    enable = true;
+    settings = builtins.fromTOML (builtins.readFile ./dotfiles/helix/config.toml);
+    languages = builtins.fromTOML (builtins.readFile ./dotfiles/helix/languages.toml);
   };
 
   git = {

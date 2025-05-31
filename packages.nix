@@ -26,7 +26,6 @@ with pkgs; [
   hugo
 
   # Code
-  lazygit
   helix
   pre-commit
   bacon

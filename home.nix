@@ -25,13 +25,11 @@
 
   # Dotfiles to configure some packages
   home.file = {
-    ".config/alacritty/alacritty.toml".source = dotfiles/alacritty.toml;
-    ".config/helix/config.toml".source = dotfiles/helix/config.toml;
-    ".config/helix/languages.toml".source = dotfiles/helix/languages.toml;
+    # TODO Move all those to home manager (doable but annoying)
     ".config/lsd/config.yaml".source = dotfiles/lsd.yaml;
-    ".config/starship.toml".source = dotfiles/starship.toml;
     ".config/ghostty/config".source = dotfiles/ghostty.conf;
     "Library/Application Support/lazygit/config.yml".source = dotfiles/lazygit.yml;
+    # Scripts
     "scripts/aerospace_horizontal.sh".source = scripts/aerospace_horizontal.sh;
     "scripts/aerospace_reset.sh".source = scripts/aerospace_reset.sh;
   };
