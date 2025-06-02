@@ -1,3 +1,5 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+
 format = '$os$shell$all'
 # command_timeout = 1000
 
@@ -12,6 +14,7 @@ format = "[$symbol]($style)"
 disabled = false
 
 [aws]
+disabled = true
 style = "bold #FF9900"
 symbol = '󰸏 '
 
@@ -48,6 +51,9 @@ symbol = " "
 [git_branch]
 symbol = " "
 
+[git_metrics]
+disabled = false
+
 [golang]
 symbol = " "
 
@@ -72,14 +78,8 @@ symbol = " "
 [lua]
 symbol = " "
 
-[memory_usage]
-symbol = " "
-
 [meson]
 symbol = "喝 "
-
-[nim]
-symbol = " "
 
 [nix_shell]
 symbol = " "
@@ -123,10 +123,11 @@ Solus = "ﴱ "
 SUSE = " "
 Ubuntu = " "
 Unknown = " "
-Windows = " "
+Windows = " "
 
 [package]
-symbol = " "
+symbol = " "
+disabled = true
 
 [pijul_channel]
 symbol = "🪺 "
@@ -148,3 +149,14 @@ symbol = " "
 
 [spack]
 symbol = "🅢 "
+
+[shell]
+disabled = true
+fish_indicator = "󰈺 "
+
+[sudo]
+disabled = false
+
+[gcloud]
+detect_env_vars = ["GOOGLE_ACCESS_KEY_ID"]
+symbol = "󱇶 "
