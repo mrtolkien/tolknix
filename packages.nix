@@ -48,6 +48,7 @@ with pkgs; [
   # Rust
   cargo-lambda
   rustup
+  zig
 
   # Go
   go
