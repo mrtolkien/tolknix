@@ -60,12 +60,8 @@ with pkgs; [
   cmake
 
   # Javascript and Typescript
-  nodePackages.nodemon
-  nodePackages.npm # globally install npm
-  nodePackages.pnpm # globally install npm
-  nodejs
+  nodejs_24
   deno
-  yarn
 
   # AI
   ollama

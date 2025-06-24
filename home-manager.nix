@@ -21,11 +21,12 @@ in
       set -gx BUN_INSTALL "$HOME/.bun"
       set -gx HISTIGNORE "pwd:ls:cd"
 
-      # Add paths using fish_add_path (preferred method)
       fish_add_path $BUN_INSTALL/bin # bun
       fish_add_path ~/.local/bin # uvx
       fish_add_path /opt/homebrew/bin # brew
-      fish_add_path ~/Development/flutter/bin # flutter
+
+      fish_add_path ~/Development/flutter/bin 
+      fish_add_path /Users/tolki/.fvm_flutter/bin
     '';
 
   };
