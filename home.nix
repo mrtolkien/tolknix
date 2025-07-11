@@ -25,7 +25,7 @@
 
   # Dotfiles to configure some packages
   home.file = {
-    # TODO Move all those to home manager (doable but annoying)
+    # TODO Move all those to home manager proper syntax (doable but annoying)
     ".config/lsd/config.yaml".source = dotfiles/lsd.yaml;
     ".config/ghostty/config".source = dotfiles/ghostty.conf;
     "Library/Application Support/lazygit/config.yml".source = dotfiles/lazygit.yml;

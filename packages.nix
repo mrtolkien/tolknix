@@ -35,7 +35,7 @@ with pkgs; [
   # docker-compose
   awscli2
   gh
-  git-open
+  # git-open  # Temporarily disabled due to hostname-debian dependency issue
 
   # Data
   postgresql_17
