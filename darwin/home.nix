@@ -7,6 +7,9 @@
   # Home Manager state version
   home.stateVersion = "24.11";
 
+  # Allow unfree packages (needed for unrar)
+  nixpkgs.config.allowUnfree = true;
+
   # Import shared configurations
   programs = { } // import ../common/home-manager.nix { inherit config pkgs lib; };
 

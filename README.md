@@ -97,9 +97,34 @@ tolknix/
 
 ### Prerequisites
 
-**Both platforms:**
+#### Install Nix
+
+**Arch Linux / CachyOS (Recommended):**
 ```bash
-# Install Nix package manager
+# Install from AUR (integrates with pacman)
+yay -S nix
+
+# Enable nix-daemon
+sudo systemctl enable --now nix-daemon.service
+
+# Add yourself to nix-users group
+sudo usermod -aG nix-users $USER
+
+# Log out and back in (or reboot) for group to take effect
+
+# Enable experimental features
+mkdir -p ~/.config/nix
+cat > ~/.config/nix/nix.conf << 'EOF'
+experimental-features = nix-command flakes
+EOF
+
+# Verify
+nix --version
+```
+
+**Other Linux / macOS:**
+```bash
+# Install Nix package manager (official script)
 sh <(curl -L https://nixos.org/nix/install) --daemon
 ```
 
@@ -126,22 +151,59 @@ darwin-rebuild switch --flake .#mbp
 ### Linux Setup (CachyOS / Arch / Any Distro)
 
 ```bash
-# Clone this repo
+# Clone this repo (if not already there)
 git clone <repo-url> ~/.config/tolknix
 cd ~/.config/tolknix
 
-# Install home-manager
+# Initialize home-manager (one-time, creates ~/.config/home-manager/ scaffolding)
 nix run home-manager/master -- init --switch --flake .#tolki@cachyos
 
-# Subsequent updates
-home-manager switch --flake .#tolki@cachyos
+# Actually apply your tolknix configuration
+home-manager switch --flake ~/.config/tolknix#tolki@cachyos
+
+# Subsequent updates (just this command)
+home-manager switch --flake ~/.config/tolknix#tolki@cachyos
 ```
 
-**Note:** On Linux, home-manager manages **only user-level packages**. Your system packages (via pacman/yay) and Hyprland configs remain untouched.
+**Note:**
+- The `init` command creates default files in `~/.config/home-manager/` (you won't use these)
+- The `switch` command uses your actual tolknix configuration
+- On Linux, home-manager manages **only user-level packages**. Your system packages (via pacman/yay) and Hyprland configs remain untouched.
 
 ## Usage
 
-### Updating Configuration
+### Updating Packages (Get Latest Versions)
+
+With flakes, package versions are **pinned** in `flake.lock`. To get newer versions:
+
+```bash
+cd ~/.config/tolknix
+
+# Update all inputs (nixpkgs, home-manager, etc.)
+nix flake update
+
+# Or update just nixpkgs
+nix flake update nixpkgs
+
+# Then rebuild to apply
+# macOS:
+darwin-rebuild switch --flake .#mbp
+
+# Linux:
+home-manager switch --flake .#tolki@cachyos
+```
+
+**What happens:**
+- `nix flake update` updates `flake.lock` with latest versions from GitHub
+- The rebuild downloads and installs the new packages
+- Your configuration stays the same, just newer package versions
+
+**How often:** Weekly or monthly is typical. Check what will update first:
+```bash
+nix flake lock --update-input nixpkgs --dry-run
+```
+
+### Updating Configuration (Change Settings)
 
 1. **Edit files:**
    - Shared settings: Edit `common/home-manager.nix` or `common/packages.nix`
@@ -156,6 +218,8 @@ home-manager switch --flake .#tolki@cachyos
    # Linux
    home-manager switch --flake ~/.config/tolknix#tolki@cachyos
    ```
+
+**Note:** You can update configuration WITHOUT updating packages - just skip the `nix flake update` step.
 
 ### Adding Packages
 

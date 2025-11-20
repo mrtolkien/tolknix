@@ -10,6 +10,11 @@ in
   fish = {
     enable = true;
 
+    # Enable vi keybindings
+    interactiveShellInit = ''
+      fish_vi_key_bindings
+    '';
+
     # Shared abbreviations
     shellAbbrs = {
       dps = "docker ps";
@@ -26,6 +31,11 @@ in
 
       fish_add_path $BUN_INSTALL/bin # bun
       fish_add_path ~/.local/bin # uvx
+
+      # Quickshell terminal color sequences (if available)
+      if test -f ~/.local/state/quickshell/user/generated/terminal/sequences.txt
+          cat ~/.local/state/quickshell/user/generated/terminal/sequences.txt
+      end
 
       # Platform-specific PATHs added in platform configs
     '';
@@ -48,7 +58,7 @@ in
   # Shell prompt - using Linux colorful version as standard
   starship = {
     enable = true;
-    enableTransience = true;
+    enableTransience = false;  # Disabled: uses deprecated fish bind syntax
     settings = builtins.fromTOML (builtins.readFile ./dotfiles/starship.toml);
   };
 
@@ -63,15 +73,14 @@ in
   git = {
     enable = true;
     ignores = [ "*.swp" ];
-    userName = name;
-    userEmail = email;
     lfs = {
       enable = true;
     };
-    difftastic = {
-      enable = true;
-    };
-    extraConfig = {
+    settings = {
+      user = {
+        name = name;
+        email = email;
+      };
       init.defaultBranch = "main";
       core = {
         editor = "nvim";
@@ -80,6 +89,12 @@ in
       pull.rebase = true;
       rebase.autoStash = true;
     };
+  };
+
+  # Difftastic (git diff tool)
+  difftastic = {
+    enable = true;
+    git.enable = true;
   };
 
   # Shell history

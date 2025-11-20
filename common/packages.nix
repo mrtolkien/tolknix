@@ -2,18 +2,7 @@
 
 # Shared CLI tools and utilities for both macOS and Linux
 with pkgs; [
-  # Shell and prompt
-  fish
-  starship
-  atuin
-  zoxide
-  carapace
-  fzf
-  direnv
-
-  # File management
-  yazi
-  lsd
+  # File management (yazi, lsd managed via programs.* in home-manager.nix)
   fd
   ripgrep
   bat
@@ -40,14 +29,8 @@ with pkgs; [
   pandoc
   hugo
 
-  # Editors
-  helix
-  neovim
-
   # Git and version control
-  git
   gh
-  lazygit
   pre-commit
 
   # Build and deploy
