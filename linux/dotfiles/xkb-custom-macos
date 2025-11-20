@@ -1,0 +1,38 @@
+// Custom US layout variant with macOS-style dead keys on AltGr (Right Alt)
+// This makes macOS-style keyboard shortcuts work on Linux
+//
+// Installation:
+//   sudo cp ~/.config/xkb-custom-macos /usr/share/X11/xkb/symbols/us_macos
+//   Then use: kb_layout = us_macos
+//   OR append this to /usr/share/X11/xkb/symbols/us and use: kb_layout = us, kb_variant = macos
+
+default partial alphanumeric_keys
+xkb_symbols "macos" {
+
+    include "us(basic)"
+    name[Group1]= "English (US, macOS-style dead keys)";
+
+    // AltGr+e = dead acute (for é, á, etc.)
+    key <AD03> { [ e, E, dead_acute, dead_acute ] };
+
+    // AltGr+` = dead grave (for è, à, ù, etc.)
+    key <TLDE> { [ grave, asciitilde, dead_grave, dead_tilde ] };
+
+    // AltGr+i = dead circumflex (for ê, â, î, ô, û)
+    key <AD08> { [ i, I, dead_circumflex, dead_circumflex ] };
+
+    // AltGr+u = dead diaeresis/umlaut (for ï, ö, ü, etc.)
+    key <AD07> { [ u, U, dead_diaeresis, dead_diaeresis ] };
+
+    // AltGr+c = ç (ccedilla)
+    key <AB03> { [ c, C, ccedilla, Ccedilla ] };
+
+    // AltGr+q = œ (oe ligature)
+    key <AD01> { [ q, Q, oe, OE ] };
+
+    // AltGr+' = « (left guillemet)
+    key <AC11> { [ apostrophe, quotedbl, guillemotleft, guillemotright ] };
+
+    // Enable Right Alt as AltGr (level 3 shift)
+    include "level3(ralt_switch)"
+};
