@@ -51,8 +51,8 @@ with pkgs; [
   cargo-lambda
   zig
   go
-  nodejs_24
-  deno
+  # nodejs_24
+  # deno
 
   # CPP
   cmake
