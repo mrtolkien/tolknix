@@ -107,6 +107,12 @@ in
         };
         pull.rebase = true;
         rebase.autoStash = true;
+        credential."https://github.com" = {
+          helper = "!${pkgs.gh}/bin/gh auth git-credential";
+        };
+        credential."https://gist.github.com" = {
+          helper = "!${pkgs.gh}/bin/gh auth git-credential";
+        };
       };
     };
 
