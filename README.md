@@ -42,7 +42,7 @@ tolknix/
 │
 └── linux/                       # Linux-specific
     ├── home.nix                # Linux home-manager entry
-    ├── packages.nix            # Linux-only packages (solaar, etc.)
+    ├── packages.nix            # Linux-only packages (etc.)
     ├── dotfiles/
     │   └── xkb-custom-macos    # Custom keyboard layout (accents)
     └── hyprland/               # Prepared for future migration
@@ -85,9 +85,6 @@ tolknix/
 - Flutter toolchain (cocoapods, FVM)
 
 ### Linux-Specific
-
-**Tools:**
-- Solaar (Logitech device manager)
 
 **Customizations:**
 - Custom keyboard layout for macOS-style accent shortcuts
@@ -164,6 +161,8 @@ home-manager switch --flake ~/.config/tolknix#tolki@cachyos
 # Subsequent updates (just this command)
 home-manager switch --flake ~/.config/tolknix#tolki@cachyos
 ```
+
+# TODO: Mark that solaar and ghostty work better through AUR
 
 **Note:**
 - The `init` command creates default files in `~/.config/home-manager/` (you won't use these)
