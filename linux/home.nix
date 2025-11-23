@@ -10,8 +10,16 @@
   home.username = "tolki";
   home.homeDirectory = "/home/tolki";
 
+  # Fonts
+  fonts.fontconfig.enable = true;
+
   # Linux-specific packages
-  home.packages = pkgs.callPackage ./packages.nix { };
+  home.packages = (pkgs.callPackage ./packages.nix { }) ++ (with pkgs; [
+    # Nerd Fonts (same as macOS)
+    nerd-fonts.jetbrains-mono
+    nerd-fonts.fira-code
+    nerd-fonts.droid-sans-mono
+  ]);
 
   # Linux-specific dotfiles
   home.file.".config/xkb-custom-macos".source = ./dotfiles/xkb-custom-macos;

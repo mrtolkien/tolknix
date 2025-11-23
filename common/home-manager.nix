@@ -44,6 +44,10 @@ in
 
       # Shared shell initialization
       shellInit = ''
+        # Add Nix profile to PATH first (critical for home-manager packages)
+        fish_add_path ~/.nix-profile/bin
+        fish_add_path /nix/var/nix/profiles/default/bin
+
         # Set environment variables
         set -gx BUN_INSTALL "$HOME/.bun"
         set -gx HISTIGNORE "pwd:ls:cd"
