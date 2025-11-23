@@ -20,7 +20,6 @@ in
     ".config/lsd/config.yaml".source = ./dotfiles/lsd.yaml;
     ".config/ghostty/config".source = ./dotfiles/ghostty.conf;
     ".config/ghostty/cursor_blaze.glsl".source = ./dotfiles/cursor_blaze.glsl;
-    ".config/ghostty/cursor_trail.glsl".source = ./dotfiles/cursor_trail.glsl;
     ".config/lazygit/config.yml".source = ./dotfiles/lazygit.yml;
   };
 
