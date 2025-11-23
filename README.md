@@ -36,7 +36,7 @@ tolknix/
 │   ├── home.nix                # macOS home-manager entry
 │   ├── packages.nix            # macOS-only packages
 │   ├── dotfiles/
-│   │   ├── ghostty-darwin.conf # macOS titlebar setting
+│   │   ├── ghostty-darwin.conf # macOS titlebar settingm
 │   │   └── aerospace.toml      # Window manager config
 │   └── scripts/                # AeroSpace automation scripts
 │
@@ -153,7 +153,7 @@ git clone <repo-url> ~/.config/tolknix
 cd ~/.config/tolknix
 
 # Initialize home-manager (one-time, creates ~/.config/home-manager/ scaffolding)
-nix run home-manager/master -- init --switch --flake .#tolki@cachyos
+nix run home-manager/master -- switch --flake .#tolki@cachyos
 
 # Actually apply your tolknix configuration
 home-manager switch --flake ~/.config/tolknix#tolki@cachyos
