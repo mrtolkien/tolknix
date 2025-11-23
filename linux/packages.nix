@@ -6,4 +6,5 @@ with pkgs; [
   home-manager
   bluetui
   pulsemixer
+  waybar
 ]
