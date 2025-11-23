@@ -47,7 +47,6 @@ with pkgs; [
   nixpkgs-fmt
 
   # Programming languages
-  rustup
   cargo-lambda
   zig
   go

@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__nix__nixos_search",
+      "Bash(hyprctl getoption:*)",
+      "WebFetch(domain:aylur.github.io)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

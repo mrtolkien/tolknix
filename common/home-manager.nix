@@ -47,6 +47,7 @@ in
         # Set environment variables
         set -gx BUN_INSTALL "$HOME/.bun"
         set -gx HISTIGNORE "pwd:ls:cd"
+        set -gx npm_config_prefix "$HOME/.local"
 
         fish_add_path $BUN_INSTALL/bin # bun
         fish_add_path ~/.local/bin # uvx
