@@ -9,8 +9,10 @@ in
   # Platform-specific configs import this and add overrides
 
   home.stateVersion = "24.11";
+  home.enableNixpkgsReleaseCheck = false;  # Disable version check for unstable
 
-  nixpkgs.config.allowUnfree = true;
+  # Note: nixpkgs.config is set at the system/flake level, not here
+  # (darwin/configuration.nix for macOS, flake.nix for Linux)
 
   # Shared packages
   home.packages = pkgs.callPackage ./packages.nix { };

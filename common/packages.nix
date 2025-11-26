@@ -60,7 +60,7 @@ with pkgs; [
   bacon
 
   # AI
-  ollama
+  # ollama  # Temporarily disabled - build fails in nixpkgs-unstable 0.12.11
 
   # Encryption and security
   age
