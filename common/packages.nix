@@ -13,7 +13,6 @@ with pkgs; [
   killall
   neofetch
   openssh
-  sqlite
   wget
   zip
   unrar
@@ -22,7 +21,8 @@ with pkgs; [
 
   # Data tools
   jq
-  yq
+  # sqlite
+  # yq
   rclone
 
   # Documentation and publishing
@@ -40,11 +40,11 @@ with pkgs; [
 
   # Data
   postgresql_17
-  dbmate
+  # dbmate
 
   # Nix development
-  nil
-  nixpkgs-fmt
+  # nil
+  # nixpkgs-fmt
 
   # Programming languages
   cargo-lambda
@@ -63,5 +63,5 @@ with pkgs; [
   # ollama  # Temporarily disabled - build fails in nixpkgs-unstable 0.12.11
 
   # Encryption and security
-  age
+  # age
 ]
