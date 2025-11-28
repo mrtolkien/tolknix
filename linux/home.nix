@@ -13,6 +13,33 @@
   # Fonts
   fonts.fontconfig.enable = true;
 
+  # Japanese locale for date/time formats
+  home.language = {
+    base = "en_GB.UTF-8";           # Overall locale
+    time = "ja_JP.UTF-8";            # Japanese date/time formats
+    numeric = "ja_JP.UTF-8";         # Japanese number formats
+    monetary = "ja_JP.UTF-8";        # Japanese currency formats
+    measurement = "ja_JP.UTF-8";     # Metric system
+  };
+
+  # Japanese IME (fcitx5 with mozc)
+  i18n.inputMethod = {
+    enable = true;
+    type = "fcitx5";
+    fcitx5.addons = with pkgs; [
+      fcitx5-mozc
+      fcitx5-gtk
+    ];
+  };
+
+  # Environment variables for fcitx5 on Wayland/Hyprland
+  home.sessionVariables = {
+    GTK_IM_MODULE = "fcitx";
+    QT_IM_MODULE = "fcitx";
+    XMODIFIERS = "@im=fcitx";
+    GLFW_IM_MODULE = "ibus"; # For some apps like Ghostty
+  };
+
   # Linux-specific packages
   home.packages = (pkgs.callPackage ./packages.nix { }) ++ (with pkgs; [
     # Nerd Fonts (same as macOS)
