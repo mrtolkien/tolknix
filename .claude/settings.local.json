@@ -4,7 +4,11 @@
       "mcp__nix__nixos_search",
       "Bash(hyprctl getoption:*)",
       "WebFetch(domain:aylur.github.io)",
-      "Bash(cat:*)"
+      "Bash(cat:*)",
+      "Bash(pgrep:*)",
+      "Bash(pidof:*)",
+      "Bash(xargs:*)",
+      "Bash(localectl status:*)"
     ],
     "deny": [],
     "ask": []
