@@ -8,6 +8,7 @@ with pkgs; [
   bat
   less
   tealdeer
+  broot
 
   # System utilities
   killall
@@ -17,7 +18,6 @@ with pkgs; [
   zip
   unrar
   unzip
-  bottom
 
   # Data tools
   jq
