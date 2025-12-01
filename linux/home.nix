@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ags, astal, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   # Linux-specific home-manager configuration
@@ -15,21 +15,18 @@
 
   # Japanese locale for date/time formats
   home.language = {
-    base = "en_GB.UTF-8";           # Overall locale
-    time = "ja_JP.UTF-8";            # Japanese date/time formats
-    numeric = "ja_JP.UTF-8";         # Japanese number formats
-    monetary = "ja_JP.UTF-8";        # Japanese currency formats
-    measurement = "ja_JP.UTF-8";     # Metric system
+    base = "en_GB.UTF-8"; # Overall locale
+    time = "ja_JP.UTF-8"; # Japanese date/time formats
+    numeric = "ja_JP.UTF-8"; # Japanese number formats
+    monetary = "ja_JP.UTF-8"; # Japanese currency formats
+    measurement = "ja_JP.UTF-8"; # Metric system
   };
 
   # Japanese IME (fcitx5 with mozc)
   i18n.inputMethod = {
     enable = true;
     type = "fcitx5";
-    fcitx5.addons = with pkgs; [
-      fcitx5-mozc
-      fcitx5-gtk
-    ];
+    fcitx5.addons = with pkgs; [ fcitx5-mozc fcitx5-gtk ];
   };
 
   # Environment variables for fcitx5 on Wayland/Hyprland
@@ -40,10 +37,29 @@
     GLFW_IM_MODULE = "ibus"; # For some apps like Ghostty
   };
 
+  # home-manager managed programs
+  programs = {
+    waybar = {
+      enable = true;
+      systemd.enable = true;
+    };
+    vicinae = {
+      enable = true;
+      systemd.enable = true;
+    };
+    hyprlock.enable = true;
+    hyprshot.enable = true;
+  };
+
+  services = {
+    hypridle.enable = true;
+    hyprpaper.enable = true;
+    swaync.enable = true;
+    hyprpolkitagent.enable = true;
+  };
+
   # Linux-specific packages
-  home.packages = (pkgs.callPackage ./packages.nix { }) ++
-    (pkgs.callPackage ./packages_hypr.nix { }) ++
-        (with pkgs; [
+  home.packages = (pkgs.callPackage ./packages.nix { }) ++ (with pkgs; [
     # Nerd Fonts (same as macOS)
     nerd-fonts.jetbrains-mono
     nerd-fonts.fira-code
@@ -53,38 +69,23 @@
   # Linux-specific dotfiles
   home.file.".config/xkb-custom-macos".source = ./dotfiles/xkb-custom-macos;
 
-  # AGS widget system
-  programs.ags = {
-    enable = true;
-    configDir = null; # Manage config manually in ~/.config/ags for now
-    extraPackages = (with pkgs; [
-      libdbusmenu-gtk3
-    ]) ++ (with ags.packages.${pkgs.stdenv.hostPlatform.system}; [
-      # Astal service libraries for bar widgets (using Hyprland native IPC instead of AstalHyprland)
-      astal4      # Core Astal library
-      tray        # System tray
-      network     # Network status
-      bluetooth   # Bluetooth status
-      wireplumber # Audio control (WirePlumber)
-    ]);
-  };
-
   # Activation script to install keyboard layout system-wide
   # This requires sudo, so it will prompt during home-manager switch
-  home.activation.installKeyboardLayout = lib.hm.dag.entryAfter ["writeBoundary"] ''
-    LAYOUT_SRC="$HOME/.config/xkb-custom-macos"
-    LAYOUT_DEST="/usr/share/X11/xkb/symbols/us_macos"
+  home.activation.installKeyboardLayout =
+    lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+      LAYOUT_SRC="$HOME/.config/xkb-custom-macos"
+      LAYOUT_DEST="/usr/share/X11/xkb/symbols/us_macos"
 
-    if [ -f "$LAYOUT_SRC" ]; then
-      if ! diff -q "$LAYOUT_SRC" "$LAYOUT_DEST" >/dev/null 2>&1; then
-        echo "Installing custom keyboard layout (requires sudo)..."
-        if sudo cp "$LAYOUT_SRC" "$LAYOUT_DEST"; then
-          echo "✓ Keyboard layout installed to $LAYOUT_DEST"
-          echo "  Use 'kb_layout = us_macos' in Hyprland config"
-        else
-          echo "⚠ Failed to install keyboard layout (sudo required)"
+      if [ -f "$LAYOUT_SRC" ]; then
+        if ! diff -q "$LAYOUT_SRC" "$LAYOUT_DEST" >/dev/null 2>&1; then
+          echo "Installing custom keyboard layout (requires sudo)..."
+          if sudo cp "$LAYOUT_SRC" "$LAYOUT_DEST"; then
+            echo "✓ Keyboard layout installed to $LAYOUT_DEST"
+            echo "  Use 'kb_layout = us_macos' in Hyprland config"
+          else
+            echo "⚠ Failed to install keyboard layout (sudo required)"
+          fi
         fi
       fi
-    fi
-  '';
+    '';
 }

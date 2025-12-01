@@ -8,6 +8,7 @@ in
   # Shared home-manager configuration for both macOS and Linux
   # Platform-specific configs import this and add overrides
 
+  news.display = "show";
   home.stateVersion = "24.11";
   home.enableNixpkgsReleaseCheck = false;  # Disable version check for unstable
 

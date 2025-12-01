@@ -7,11 +7,9 @@
     darwin.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
-    ags.url = "github:aylur/ags";
-    astal.url = "github:aylur/astal";
   };
 
-  outputs = inputs@{ nixpkgs, home-manager, darwin, ags, astal, ... }: {
+  outputs = inputs@{ nixpkgs, home-manager, darwin, ... }: {
     # macOS configuration via nix-darwin + home-manager
     darwinConfigurations = {
       mbp = darwin.lib.darwinSystem {
@@ -37,9 +35,7 @@
           system = "x86_64-linux";
           config.allowUnfree = true;
         };
-        extraSpecialArgs = { inherit ags astal; };
         modules = [
-          ags.homeManagerModules.default
           ./linux/home.nix
           {
             home.username = "tolki";

@@ -11,7 +11,8 @@
       "Bash(localectl status:*)",
       "WebFetch(domain:wiki.hypr.land)",
       "mcp__nix__nixos_info",
-      "Bash(pacman -Q:*)"
+      "Bash(pacman -Q:*)",
+      "mcp__nix__home_manager_info"
     ],
     "deny": [],
     "ask": []

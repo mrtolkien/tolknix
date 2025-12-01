@@ -8,4 +8,7 @@ with pkgs; [
   # TUI managers
   bluetui
   pulsemixer
+  # GUI stuff
+  networkmanagerapplet # Network manager system tray
+  blueman # Bluetooth manager system tray
 ]
