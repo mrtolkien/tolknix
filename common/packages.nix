@@ -12,12 +12,13 @@ with pkgs; [
 
   # System utilities
   killall
-  neofetch
   openssh
   wget
   zip
   unrar
   unzip
+  btop
+  nvtopPackages.full
 
   # Data tools
   jq

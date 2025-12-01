@@ -2,6 +2,15 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Essential tool
+
+You have access to the Nix MCP which lets you:
+- Query nix packages
+- Query home assistant options
+- Search Nix doc
+
+Use it extensively to validate your assumptions.
+
 ## Essential Commands
 
 ### macOS (nix-darwin)

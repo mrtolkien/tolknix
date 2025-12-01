@@ -49,6 +49,10 @@ in
         fish_add_path ~/.nix-profile/bin
         fish_add_path /nix/var/nix/profiles/default/bin
 
+        function fish_greeting
+            fastfetch
+        end
+
         # Set environment variables
         set -gx BUN_INSTALL "$HOME/.bun"
         set -gx HISTIGNORE "pwd:ls:cd"
@@ -56,11 +60,6 @@ in
 
         fish_add_path $BUN_INSTALL/bin # bun
         fish_add_path ~/.local/bin # uvx
-
-        # Quickshell terminal color sequences (if available)
-        if test -f ~/.local/state/quickshell/user/generated/terminal/sequences.txt
-            cat ~/.local/state/quickshell/user/generated/terminal/sequences.txt
-        end
 
         # Platform-specific PATHs added in platform configs
       '';
@@ -73,6 +72,7 @@ in
     zoxide.enable = true;
     carapace.enable = true;
     tealdeer.enable = true;
+    fastfetch.enable = true;
 
     # Terminal multiplexer
     zellij.enable = true;

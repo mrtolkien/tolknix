@@ -41,7 +41,9 @@
   };
 
   # Linux-specific packages
-  home.packages = (pkgs.callPackage ./packages.nix { }) ++ (with pkgs; [
+  home.packages = (pkgs.callPackage ./packages.nix { }) ++
+    (pkgs.callPackage ./packages_hypr.nix { }) ++
+        (with pkgs; [
     # Nerd Fonts (same as macOS)
     nerd-fonts.jetbrains-mono
     nerd-fonts.fira-code
@@ -57,7 +59,7 @@
     configDir = null; # Manage config manually in ~/.config/ags for now
     extraPackages = (with pkgs; [
       libdbusmenu-gtk3
-    ]) ++ (with ags.packages.${pkgs.system}; [
+    ]) ++ (with ags.packages.${pkgs.stdenv.hostPlatform.system}; [
       # Astal service libraries for bar widgets (using Hyprland native IPC instead of AstalHyprland)
       astal4      # Core Astal library
       tray        # System tray
