@@ -34,7 +34,7 @@
 
   # Environment variables for fcitx5 on Wayland/Hyprland
   home.sessionVariables = {
-    GTK_IM_MODULE = "fcitx";
+    # GTK_IM_MODULE not needed - use native Wayland input method protocol
     QT_IM_MODULE = "fcitx";
     XMODIFIERS = "@im=fcitx";
     GLFW_IM_MODULE = "ibus"; # For some apps like Ghostty

@@ -8,6 +8,7 @@ with pkgs; [
   hyprlock
   hyprpaper
   hyprshot
+  hyprpolkitagent
   vicinae
   brightnessctl
   swaynotificationcenter # Notification daemon with waybar integration
