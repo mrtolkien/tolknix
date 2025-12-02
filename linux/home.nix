@@ -60,6 +60,18 @@
     hyprpolkitagent.enable = true;
   };
 
+  # Hyprland session target
+  # Start with: systemctl --user start hyprland-session.target
+  systemd.user.targets.hyprland-session = {
+    Unit = {
+      Description = "Hyprland compositor session";
+      Documentation = [ "man:systemd.special(7)" ];
+      BindsTo = [ "graphical-session.target" ];
+      Wants = [ "graphical-session-pre.target" ];
+      After = [ "graphical-session-pre.target" ];
+    };
+  };
+
   # Automatic garbage collection (matching macOS config)
   systemd.user.services.nix-gc = {
     Unit = {
