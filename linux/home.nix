@@ -60,6 +60,30 @@
     hyprpolkitagent.enable = true;
   };
 
+  # Automatic garbage collection (matching macOS config)
+  systemd.user.services.nix-gc = {
+    Unit = {
+      Description = "Nix Garbage Collector";
+    };
+    Service = {
+      Type = "oneshot";
+      ExecStart = "${pkgs.nix}/bin/nix-collect-garbage --delete-older-than 30d";
+    };
+  };
+
+  systemd.user.timers.nix-gc = {
+    Unit = {
+      Description = "Nix Garbage Collection Timer";
+    };
+    Timer = {
+      OnCalendar = "Sun *-*-* 23:00:00";
+      Persistent = true;
+    };
+    Install = {
+      WantedBy = [ "timers.target" ];
+    };
+  };
+
   # Linux-specific packages
   home.packages = (pkgs.callPackage ./packages.nix { }) ++ (with pkgs; [
     # Nerd Fonts (same as macOS)
