@@ -12,7 +12,14 @@
       "WebFetch(domain:wiki.hypr.land)",
       "mcp__nix__nixos_info",
       "Bash(pacman -Q:*)",
-      "mcp__nix__home_manager_info"
+      "mcp__nix__home_manager_info",
+      "Bash(systemctl --user list-unit-files:*)",
+      "Bash(systemctl --user status:*)",
+      "Bash(journalctl:*)",
+      "Bash(systemctl --user show:*)",
+      "mcp__nix__home_manager_search",
+      "mcp__nix__home_manager_options_by_prefix",
+      "Bash(env)"
     ],
     "deny": [],
     "ask": []

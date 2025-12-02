@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ pkgs, lib, ... }:
 
 {
   # Linux-specific home-manager configuration
@@ -31,7 +31,9 @@
 
   # Environment variables for fcitx5 on Wayland/Hyprland
   home.sessionVariables = {
-    # GTK_IM_MODULE not needed - use native Wayland input method protocol
+    # Explicitly unset GTK_IM_MODULE to use native Wayland input method protocol
+    # Use mkForce to override the fcitx5 module's default
+    GTK_IM_MODULE = lib.mkForce "";
     QT_IM_MODULE = "fcitx";
     XMODIFIERS = "@im=fcitx";
     GLFW_IM_MODULE = "ibus"; # For some apps like Ghostty
