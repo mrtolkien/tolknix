@@ -3,6 +3,7 @@
 # Shared CLI tools and utilities for both macOS and Linux
 with pkgs; [
   # File management (yazi, lsd managed via programs.* in home-manager.nix)
+  # TODO: Review which can have shell integration w/ home manager
   fd
   ripgrep
   bat
@@ -25,6 +26,7 @@ with pkgs; [
   # sqlite
   # yq
   rclone
+  croc
 
   # Documentation and publishing
   pandoc
