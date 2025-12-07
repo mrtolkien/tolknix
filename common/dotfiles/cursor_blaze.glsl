@@ -76,7 +76,8 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord) {
     vec2 v2 = vec2(previousCursor.x + currentCursor.z * invertedVertexFactor, previousCursor.y);
     vec2 v3 = vec2(previousCursor.x + currentCursor.z * vertexFactor, previousCursor.y - previousCursor.w);
     vec4 newColor = vec4(fragColor);
-    float progress = blend(clamp((iTime - iTimeCursorChange) / 0.5, 0.0, 1));
+    float timeSinceChange = iTime - iTimeCursorChange;
+    float progress = blend(clamp(timeSinceChange / 0.5, 0.0, 1));
     float easedProgress = ease(progress);
     vec2 centerCC = getRectangleCenter(currentCursor);
     vec2 centerCP = getRectangleCenter(previousCursor);
@@ -95,7 +96,8 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord) {
         float sdfTrail = getSdfParallelogram(vu, v0, v1, v2, v3);
         newColor = mix(newColor, vec4(1.0, 0., 0., 1.0), 1.0 - smoothstep(sdfTrail, -0.01, 0.001));
         newColor = mix(newColor, vec4(1.0, 0.725, 0.161, 1.0), antialising(sdfTrail));
-        newColor = mix(fragColor, newColor, 1.0 - alphaModifier);
+        float fadeIn = smoothstep(0.0, 0.08, timeSinceChange);
+        newColor = mix(fragColor, newColor, (1.0 - alphaModifier) * fadeIn);
         fragColor = mix(newColor, fragColor, step(sdfCursor, 0));
     }
 }
