@@ -40,7 +40,7 @@ in
       shellAbbrs = {
         dps = "docker ps";
         l = "lazygit";
-        n = "nvim .";
+        n = "nvim";
         # Platform-specific abbreviations added in platform configs
       };
 

@@ -134,8 +134,7 @@ This is a **cross-platform Nix configuration** supporting:
 - Direnv (directory env vars)
 
 **Editors:**
-- Helix (primary, configured via dotfiles)
-- Neovim (fallback, set as default editor)
+- Neovim 
 
 **Terminal Tools:**
 - Yazi file manager (wrapper named `y`)

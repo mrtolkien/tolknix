@@ -55,7 +55,24 @@
 
   services = {
     hypridle.enable = true;
-    hyprpaper.enable = true;
+    hyprpaper = {
+      enable = true;
+      settings = {
+        ipc = "on";
+        splash = false;
+        splash_offset = 2.0;
+
+        preload = [
+          "/home/tolki/wallpapers/favorites/5g22q5.png"
+          "/home/tolki/wallpapers/favorites/lqx1d2.jpg"
+        ];
+
+        wallpaper = [
+          "DP-2,/home/tolki/wallpapers/favorites/5g22q5.png"
+          "HDMI-A-1,/home/tolki/wallpapers/favorites/lqx1d2.jpg"
+        ];
+      };
+    };
     swaync.enable = true;
     hyprpolkitagent.enable = true;
   };
@@ -74,9 +91,7 @@
 
   # Automatic garbage collection (matching macOS config)
   systemd.user.services.nix-gc = {
-    Unit = {
-      Description = "Nix Garbage Collector";
-    };
+    Unit = { Description = "Nix Garbage Collector"; };
     Service = {
       Type = "oneshot";
       ExecStart = "${pkgs.nix}/bin/nix-collect-garbage --delete-older-than 30d";
@@ -84,16 +99,12 @@
   };
 
   systemd.user.timers.nix-gc = {
-    Unit = {
-      Description = "Nix Garbage Collection Timer";
-    };
+    Unit = { Description = "Nix Garbage Collection Timer"; };
     Timer = {
       OnCalendar = "Sun *-*-* 23:00:00";
       Persistent = true;
     };
-    Install = {
-      WantedBy = [ "timers.target" ];
-    };
+    Install = { WantedBy = [ "timers.target" ]; };
   };
 
   # Linux-specific packages
