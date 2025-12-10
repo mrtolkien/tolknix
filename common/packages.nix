@@ -34,6 +34,7 @@ with pkgs; [
 
   # Git and version control
   gh
+  git-open
   pre-commit
 
   # Build and deploy
