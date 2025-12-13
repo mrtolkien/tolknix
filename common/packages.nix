@@ -9,6 +9,7 @@ with pkgs; [
   bat
   less
   tealdeer
+  bacon
   broot
 
   # System utilities
@@ -21,10 +22,11 @@ with pkgs; [
   btop
   nvtopPackages.full
 
+  viu # Two tools for showing images in terminal, still WiP
+  chafa
+
   # Data tools
   jq
-  # sqlite
-  # yq
   rclone
   croc
 
@@ -39,33 +41,15 @@ with pkgs; [
 
   # Build and deploy
   awscli2
-  # docker
-  # docker-compose
 
   # Data
   postgresql_17
-  # dbmate
-
-  # Nix development
-  # nil
-  # nixpkgs-fmt
 
   # Programming languages
   cargo-lambda
   zig
-  go
-  # nodejs_24
-  # deno
+  statix
 
   # CPP
   cmake
-
-  # Development tools
-  bacon
-
-  # AI
-  # ollama  # Temporarily disabled - build fails in nixpkgs-unstable 0.12.11
-
-  # Encryption and security
-  # age
 ]

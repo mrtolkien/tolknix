@@ -1,16 +1,15 @@
-{ config, pkgs, lib, ... }:
+{ pkgs, ... }:
 
 let
   name = "mrtolkien";
   email = "gary.mialaret@gmail.com";
-in
-{
+in {
   # Shared home-manager configuration for both macOS and Linux
   # Platform-specific configs import this and add overrides
 
   news.display = "show";
   home.stateVersion = "24.11";
-  home.enableNixpkgsReleaseCheck = false;  # Disable version check for unstable
+  home.enableNixpkgsReleaseCheck = false; # Disable version check for unstable
 
   # Note: nixpkgs.config is set at the system/flake level, not here
   # (darwin/configuration.nix for macOS, flake.nix for Linux)
@@ -61,6 +60,7 @@ in
 
         fish_add_path $BUN_INSTALL/bin # bun
         fish_add_path ~/.local/bin # uvx
+        source "$HOME/.cargo/env.fish"
 
         # Platform-specific PATHs added in platform configs
       '';
@@ -84,24 +84,24 @@ in
     # Shell prompt - using Linux colorful version as standard
     starship = {
       enable = true;
-      enableTransience = true;  # Replaces previous prompts with custom string
+      enableTransience = true; # Replaces previous prompts with custom string
       settings = builtins.fromTOML (builtins.readFile ./dotfiles/starship.toml);
     };
 
     # Editor
     helix = {
       enable = true;
-      settings = builtins.fromTOML (builtins.readFile ./dotfiles/helix/config.toml);
-      languages = builtins.fromTOML (builtins.readFile ./dotfiles/helix/languages.toml);
+      settings =
+        builtins.fromTOML (builtins.readFile ./dotfiles/helix/config.toml);
+      languages =
+        builtins.fromTOML (builtins.readFile ./dotfiles/helix/languages.toml);
     };
 
     # Git configuration
     git = {
       enable = true;
       ignores = [ "*.swp" ];
-      lfs = {
-        enable = true;
-      };
+      lfs = { enable = true; };
       settings = {
         user = {
           name = name;
@@ -152,9 +152,7 @@ in
       shellWrapperName = "y";
 
       settings = {
-        mgr = {
-          show_hidden = true;
-        };
+        mgr = { show_hidden = true; };
         preview = {
           max_width = 1000;
           max_height = 1000;
