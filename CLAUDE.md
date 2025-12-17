@@ -5,6 +5,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Essential tool
 
 You have access to the Nix MCP which lets you:
+
 - Query nix packages
 - Query home assistant options
 - Search Nix doc
@@ -72,9 +73,11 @@ This is a **cross-platform Nix configuration** supporting:
 ### File Structure
 
 **Entry Point:**
+
 - **flake.nix**: Main entry defining both `darwinConfigurations.mbp` and `homeConfigurations.tolki@cachyos`
 
 **Shared Configurations (common/):**
+
 - **packages.nix**: CLI tools for both platforms (fish, git, helix, etc.)
 - **home-manager.nix**: Program configurations (shell, editors, git settings)
 - **dotfiles/**: Config files (starship, ghostty, helix, lazygit, lsd)
@@ -82,6 +85,7 @@ This is a **cross-platform Nix configuration** supporting:
   - Ghostty includes custom cursor shader (cursor_blaze.glsl)
 
 **macOS-Specific (darwin/):**
+
 - **configuration.nix**: System-level Darwin config (fonts, defaults, user setup)
 - **home.nix**: macOS home-manager entry (imports common + adds overrides)
 - **packages.nix**: macOS-only packages (cocoapods)
@@ -89,6 +93,7 @@ This is a **cross-platform Nix configuration** supporting:
 - **scripts/**: AeroSpace automation scripts
 
 **Linux-Specific (linux/):**
+
 - **home.nix**: Linux home-manager entry (imports common + adds overrides)
 - **packages.nix**: Linux-only packages (solaar)
 - **dotfiles/**: Custom keyboard layout (us_macos for accents)
@@ -116,16 +121,17 @@ This is a **cross-platform Nix configuration** supporting:
 
 ### Platform Targets
 
-| Target | Platform | System | User | Purpose |
-|--------|----------|--------|------|---------|
-| `#mbp` | macOS | aarch64-darwin | tolki | Full system via nix-darwin |
-| `#tolki@cachyos` | Linux | x86_64-linux | tolki | User environment only |
+| Target           | Platform | System         | User  | Purpose                    |
+| ---------------- | -------- | -------------- | ----- | -------------------------- |
+| `#mbp`           | macOS    | aarch64-darwin | tolki | Full system via nix-darwin |
+| `#tolki@cachyos` | Linux    | x86_64-linux   | tolki | User environment only      |
 
 ## User Environment
 
 ### Shared Tools
 
 **Shell:**
+
 - Fish with custom abbreviations, vi mode
 - Starship prompt (colorful, multi-line, git status with emojis)
 - Atuin history (directory-based filtering)
@@ -134,9 +140,11 @@ This is a **cross-platform Nix configuration** supporting:
 - Direnv (directory env vars)
 
 **Editors:**
-- Neovim 
+
+- Neovim
 
 **Terminal Tools:**
+
 - Yazi file manager (wrapper named `y`)
 - Lazygit git UI
 - LSD for directory listing
@@ -144,6 +152,7 @@ This is a **cross-platform Nix configuration** supporting:
 - Zellij multiplexer
 
 **Git:**
+
 - User: mrtolkien (gary.mialaret@gmail.com)
 - Difftastic for diffs
 - LFS enabled
@@ -152,29 +161,35 @@ This is a **cross-platform Nix configuration** supporting:
 ### macOS-Specific
 
 **System Defaults:**
+
 - Keyboard: Fast repeat (KeyRepeat: 1, InitialKeyRepeat: 12), no press-and-hold
 - Dock: Auto-hide, left orientation, 48px tiles
 - Finder: Show all extensions, list view
 - Trackpad: Three-finger drag disabled
 
 **Shell Additions:**
+
 - PATH: Homebrew (`/opt/homebrew/bin`), Flutter, FVM, Bun
 - Abbreviations: `f` (open in Finder), `v` (Obsidian vault)
 
 **Applications:**
+
 - AeroSpace window manager (configured via dotfiles)
 
 ### Linux-Specific
 
 **Shell Additions:**
+
 - PATH: Standard Linux paths + Bun, uvx
 - Activation script: Installs keyboard layout to /usr/share/X11/xkb/symbols/us_macos
 
 **Keyboard Layout:**
+
 - Custom us_macos layout for macOS-style accents
 - AltGr-based dead keys (e → é, i → î, u → ü, c → ç)
 
 **Tools:**
+
 - Solaar for Logitech devices
 
 ## Modifying Configuration
@@ -182,6 +197,7 @@ This is a **cross-platform Nix configuration** supporting:
 ### Adding Shared Packages
 
 Edit `common/packages.nix`:
+
 ```nix
 with pkgs; [
   # ... existing packages
@@ -196,6 +212,7 @@ Edit `darwin/packages.nix` or `linux/packages.nix`
 ### Modifying Shared Programs
 
 Edit `common/home-manager.nix`:
+
 ```nix
 {
   program-name = {
@@ -208,6 +225,7 @@ Edit `common/home-manager.nix`:
 ### Adding Platform-Specific Overrides
 
 Edit `darwin/home.nix` or `linux/home.nix`:
+
 ```nix
 programs.fish.shellInit = lib.mkAfter ''
   # Platform-specific shell init
@@ -226,11 +244,13 @@ Changes take effect on next build/switch.
 The Linux configuration is designed for **gradual migration**:
 
 ### Current State (Phase 1)
+
 - ✅ home-manager manages shell tools, editors, CLI utilities
 - ❌ Hyprland remains in `~/.config/hypr/` (not nix-managed)
 - ❌ System packages stay with pacman/yay
 
 ### Future State (Phase 2)
+
 - Move Hyprland configs to `linux/hyprland/`
 - Uncomment home.file sections in `linux/home.nix`
 - home-manager links Hyprland configs
@@ -240,12 +260,14 @@ See `linux/hyprland/README.md` for migration plan.
 ## Important Notes
 
 ### macOS
+
 - User home directory: `/Users/tolki`
 - Lazygit config in `Library/Application Support/`
 - Requires Xcode Command Line Tools
 - System-level changes require nix-darwin rebuild
 
 ### Linux
+
 - User home directory: `/home/tolki`
 - Lazygit config in `.config/`
 - Keyboard layout installation requires sudo (prompted during switch)
@@ -253,6 +275,7 @@ See `linux/hyprland/README.md` for migration plan.
 - Hyprland NOT managed by nix yet
 
 ### Both
+
 - Home Manager state version: 24.11
 - Flake uses nixos-unstable channel
 - Backup files created with `.bak` extension
@@ -261,26 +284,31 @@ See `linux/hyprland/README.md` for migration plan.
 ## Troubleshooting
 
 ### Build Fails on Linux
+
 - Ensure Nix is installed: `nix --version`
 - Check flake syntax: `nix flake check`
 - Update inputs: `nix flake update`
 
 ### Build Fails on macOS
+
 - Ensure nix-darwin is initialized
 - Check system is aarch64-darwin: `uname -m`
 - Verify configuration.nix syntax
 
 ### Fish Config Not Loading
+
 - Check PATH: `echo $PATH | grep nix`
 - Verify fish from nix: `which fish`
 - Restart terminal/shell
 
 ### Ghostty Shader Not Working
+
 - Check files exist: `ls ~/.config/ghostty/*.glsl`
 - Verify config: `cat ~/.config/ghostty/config | grep shader`
 - Reload Ghostty: Super+R
 
 ### Keyboard Layout Issues (Linux)
+
 - Check installation: `ls -l /usr/share/X11/xkb/symbols/us_macos`
 - Reinstall: Run activation script manually or `home-manager switch` again
 - Verify Hyprland config: `hyprctl getoption input:kb_layout`
@@ -295,10 +323,10 @@ See `linux/hyprland/README.md` for migration plan.
 
 ## When to Use Which File
 
-| Task | macOS | Linux | Shared |
-|------|-------|-------|--------|
-| Add CLI tool | darwin/packages.nix | linux/packages.nix | common/packages.nix |
-| Configure program | darwin/home.nix | linux/home.nix | common/home-manager.nix |
-| System setting | darwin/configuration.nix | N/A | N/A |
-| Dotfile | darwin/dotfiles/ | linux/dotfiles/ | common/dotfiles/ |
-| Window manager | darwin/ (AeroSpace) | ~/.config/hypr/ (not nix yet) | N/A |
+| Task              | macOS                    | Linux                         | Shared                  |
+| ----------------- | ------------------------ | ----------------------------- | ----------------------- |
+| Add CLI tool      | darwin/packages.nix      | linux/packages.nix            | common/packages.nix     |
+| Configure program | darwin/home.nix          | linux/home.nix                | common/home-manager.nix |
+| System setting    | darwin/configuration.nix | N/A                           | N/A                     |
+| Dotfile           | darwin/dotfiles/         | linux/dotfiles/               | common/dotfiles/        |
+| Window manager    | darwin/ (AeroSpace)      | ~/.config/hypr/ (not nix yet) | N/A                     |
