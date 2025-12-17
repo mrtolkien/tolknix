@@ -1,22 +1,24 @@
 { pkgs, ... }:
 
 {
+  nix = {
 
-  # Necessary for using flakes on this system.
-  nix.enable = true;
-  nix.settings.experimental-features = "nix-command flakes";
-  nix.gc = {
-    automatic = true;
-    interval = { Weekday = 0; Hour = 23; Minute = 0; };
-    options = "--delete-older-than 30d";
+    # Necessary for using flakes on this system.
+    enable = true;
+    settings.experimental-features = "nix-command flakes";
+    gc = {
+      automatic = true;
+      interval = {
+        Weekday = 0;
+        Hour = 23;
+        Minute = 0;
+      };
+      options = "--delete-older-than 30d";
+    };
   };
 
   # Enable fonts dir
-  fonts.packages = with pkgs; [
-    nerd-fonts.jetbrains-mono
-    nerd-fonts.fira-code
-    nerd-fonts.droid-sans-mono
-  ];
+  fonts.packages = with pkgs; [ monaspace ];
 
   # The platform the configuration will be used on.
   nixpkgs.hostPlatform = "aarch64-darwin";
@@ -64,14 +66,10 @@
         QuitMenuItem = true;
       };
 
-      trackpad = {
-        TrackpadThreeFingerDrag = false;
-      };
+      trackpad = { TrackpadThreeFingerDrag = false; };
     };
 
-    keyboard = {
-      enableKeyMapping = true;
-    };
+    keyboard = { enableKeyMapping = true; };
   };
 
 }

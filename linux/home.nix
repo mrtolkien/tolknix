@@ -31,12 +31,8 @@
     };
 
     # Linux-specific packages
-    packages = (pkgs.callPackage ./packages.nix { }) ++ (with pkgs; [
-      # Nerd Fonts (same as macOS)
-      nerd-fonts.jetbrains-mono
-      nerd-fonts.fira-code
-      nerd-fonts.droid-sans-mono
-    ]);
+    packages = (pkgs.callPackage ./packages.nix { })
+      ++ (with pkgs; [ monaspace ]);
 
     # Linux-specific dotfiles
     file.".config/xkb-custom-macos".source = ./dotfiles/xkb-custom-macos;
