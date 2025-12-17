@@ -8,21 +8,23 @@ in {
   # Platform-specific configs import this and add overrides
 
   news.display = "show";
-  home.stateVersion = "24.11";
-  home.enableNixpkgsReleaseCheck = false; # Disable version check for unstable
+  home = {
+    stateVersion = "24.11";
+    enableNixpkgsReleaseCheck = false; # Disable version check for unstable
 
-  # Note: nixpkgs.config is set at the system/flake level, not here
-  # (darwin/configuration.nix for macOS, flake.nix for Linux)
+    # Note: nixpkgs.config is set at the system/flake level, not here
+    # (darwin/configuration.nix for macOS, flake.nix for Linux)
 
-  # Shared packages
-  home.packages = pkgs.callPackage ./packages.nix { };
+    # Shared packages
+    packages = pkgs.callPackage ./packages.nix { };
 
-  # Shared dotfiles
-  home.file = {
-    ".config/lsd/config.yaml".source = ./dotfiles/lsd.yaml;
-    ".config/ghostty/config".source = ./dotfiles/ghostty.conf;
-    ".config/ghostty/cursor_blaze.glsl".source = ./dotfiles/cursor_blaze.glsl;
-    ".config/lazygit/config.yml".source = ./dotfiles/lazygit.yml;
+    # Shared dotfiles
+    file = {
+      ".config/lsd/config.yaml".source = ./dotfiles/lsd.yaml;
+      ".config/ghostty/config".source = ./dotfiles/ghostty.conf;
+      ".config/ghostty/cursor_blaze.glsl".source = ./dotfiles/cursor_blaze.glsl;
+      ".config/lazygit/config.yml".source = ./dotfiles/lazygit.yml;
+    };
   };
 
   # Program configurations
@@ -104,8 +106,8 @@ in {
       lfs = { enable = true; };
       settings = {
         user = {
-          name = name;
-          email = email;
+          inherit name;
+          inherit email;
         };
         init.defaultBranch = "main";
         core = {

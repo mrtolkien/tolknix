@@ -19,7 +19,8 @@
       "Bash(systemctl --user show:*)",
       "mcp__nix__home_manager_search",
       "mcp__nix__home_manager_options_by_prefix",
-      "Bash(env)"
+      "Bash(env)",
+      "Bash(ghostty +list-fonts:*)"
     ],
     "deny": [],
     "ask": []
