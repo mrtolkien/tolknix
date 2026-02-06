@@ -26,7 +26,7 @@
 
   programs.fish.enable = true;
   environment.shells = [ pkgs.fish ];
-  # TODO services.karabiner-elements.enable = true;
+  # TODO: services.karabiner-elements.enable = true;
 
   users.users.tolki = {
     name = "tolki";

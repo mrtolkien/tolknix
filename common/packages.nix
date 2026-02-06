@@ -21,6 +21,7 @@ with pkgs; [
   unzip
   btop
   nvtopPackages.full
+  ttyd
 
   viu # Two tools for showing images in terminal, still WiP
   chafa

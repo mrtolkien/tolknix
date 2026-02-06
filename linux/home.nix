@@ -84,24 +84,25 @@
 
   services = {
     hypridle.enable = true;
-    hyprpaper = {
-      enable = true;
-      settings = {
-        ipc = "on";
-        splash = false;
-        splash_offset = 2.0;
-
-        preload = [
-          "/home/tolki/wallpapers/favorites/5g22q5.png"
-          "/home/tolki/wallpapers/favorites/lqx1d2.jpg"
-        ];
-
-        wallpaper = [
-          "DP-2,/home/tolki/wallpapers/favorites/5g22q5.png"
-          "HDMI-A-1,/home/tolki/wallpapers/favorites/lqx1d2.jpg"
-        ];
-      };
-    };
+    # hyprpaper = {
+    #   enable = false;
+    #   package = null; # Use system hyprpaper for Hyprland ABI compatibility
+    #   settings = {
+    #     ipc = "on";
+    #     splash = false;
+    #     splash_offset = 2;
+    #
+    #     preload = [
+    #       "/home/tolki/wallpapers/favorites/5g22q5.png"
+    #       "/home/tolki/wallpapers/favorites/lqx1d2.jpg"
+    #     ];
+    #
+    #     wallpaper = [
+    #       "DP-2,/home/tolki/wallpapers/favorites/5g22q5.png"
+    #       "HDMI-A-1,/home/tolki/wallpapers/favorites/lqx1d2.jpg"
+    #     ];
+    #   };
+    # };
     swaync.enable = true;
     hyprpolkitagent.enable = true;
   };

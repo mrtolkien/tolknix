@@ -11,4 +11,5 @@ with pkgs; [
   # GUI stuff
   networkmanagerapplet # Network manager system tray
   blueman # Bluetooth manager system tray
+  llama-cpp-rocm
 ]
