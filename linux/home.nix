@@ -28,6 +28,7 @@
       QT_IM_MODULE = "fcitx";
       XMODIFIERS = "@im=fcitx";
       GLFW_IM_MODULE = "ibus"; # For some apps like Ghostty
+      FILE_MANAGER = "thunar";
     };
 
     # Linux-specific packages
@@ -58,6 +59,65 @@
       '';
   };
 
+  # GTK theming (so Thunar and other GTK apps look right)
+  gtk = {
+    enable = true;
+    theme = { name = "Adwaita-dark"; };
+    iconTheme = {
+      package = pkgs.papirus-icon-theme;
+      name = "Papirus-Dark";
+    };
+  };
+
+  # Desktop entry for opening files in nvim via ghostty
+  xdg.desktopEntries.nvim-ghostty = {
+    name = "Neovim (Ghostty)";
+    genericName = "Text Editor";
+    exec = "ghostty -e nvim %F";
+    terminal = false;
+    categories = [ "Utility" "TextEditor" ];
+    mimeType = [ "text/plain" "text/x-script" "application/x-shellscript" ];
+  };
+
+  # XDG MIME associations
+  xdg.mimeApps = {
+    enable = true;
+    defaultApplications = {
+      # PDF → Firefox
+      "application/pdf" = [ "firefox.desktop" ];
+      # Text files → nvim in ghostty
+      "text/plain" = [ "nvim-ghostty.desktop" ];
+      "text/x-script" = [ "nvim-ghostty.desktop" ];
+      "application/x-shellscript" = [ "nvim-ghostty.desktop" ];
+      "text/x-python" = [ "nvim-ghostty.desktop" ];
+      "text/x-csrc" = [ "nvim-ghostty.desktop" ];
+      "text/x-chdr" = [ "nvim-ghostty.desktop" ];
+      "text/x-java" = [ "nvim-ghostty.desktop" ];
+      "text/x-makefile" = [ "nvim-ghostty.desktop" ];
+      "text/x-markdown" = [ "nvim-ghostty.desktop" ];
+      "text/xml" = [ "nvim-ghostty.desktop" ];
+      "application/json" = [ "nvim-ghostty.desktop" ];
+      "application/x-yaml" = [ "nvim-ghostty.desktop" ];
+      "application/toml" = [ "nvim-ghostty.desktop" ];
+      # Web
+      "text/html" = [ "firefox.desktop" ];
+      "x-scheme-handler/http" = [ "firefox.desktop" ];
+      "x-scheme-handler/https" = [ "firefox.desktop" ];
+      # Images → default viewer (loupe/eog)
+      "image/png" = [ "org.gnome.Loupe.desktop" ];
+      "image/jpeg" = [ "org.gnome.Loupe.desktop" ];
+      "image/gif" = [ "org.gnome.Loupe.desktop" ];
+      "image/webp" = [ "org.gnome.Loupe.desktop" ];
+      "image/svg+xml" = [ "org.gnome.Loupe.desktop" ];
+      # Scheme handlers
+      "x-scheme-handler/terminal" = [ "Ghostty.desktop" ];
+      "x-scheme-handler/todoist" = [ "todoist.desktop" ];
+      "x-scheme-handler/com.todoist" = [ "todoist.desktop" ];
+      # File manager
+      "inode/directory" = [ "thunar.desktop" ];
+    };
+  };
+
   # Fonts
   fonts.fontconfig.enable = true;
 
@@ -74,10 +134,11 @@
       enable = true;
       systemd.enable = true;
     };
-    vicinae = {
-      enable = true;
-      systemd.enable = true;
-    };
+    # TODO: Re-enable if it works again LUL
+    # vicinae = {
+    #   enable = true;
+    #   systemd.enable = true;
+    # };
     hyprlock.enable = true;
     hyprshot.enable = true;
   };

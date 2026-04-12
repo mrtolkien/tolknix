@@ -11,6 +11,7 @@ with pkgs; [
   tealdeer
   bacon
   broot
+  todoist
 
   # System utilities
   killall

@@ -23,6 +23,7 @@
             home-manager.useUserPackages = true;
             home-manager.users.tolki = import ./darwin/home.nix;
             home-manager.backupFileExtension = ".bak";
+            home-manager.extraSpecialArgs = { inherit inputs; };
           }
         ];
       };
@@ -35,6 +36,7 @@
           system = "x86_64-linux";
           config.allowUnfree = true;
         };
+        extraSpecialArgs = { inherit inputs; };
         modules = [
           ./linux/home.nix
           {

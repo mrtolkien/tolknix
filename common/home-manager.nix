@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, inputs, ... }:
 
 let
   name = "mrtolkien";
@@ -16,7 +16,7 @@ in {
     # (darwin/configuration.nix for macOS, flake.nix for Linux)
 
     # Shared packages
-    packages = pkgs.callPackage ./packages.nix { };
+    packages = (pkgs.callPackage ./packages.nix { });
 
     # Shared dotfiles
     file = {
@@ -106,8 +106,8 @@ in {
       lfs = { enable = true; };
       settings = {
         user = {
-          inherit name;
-          inherit email;
+          name = "mrtolkien";
+          email = "164381380+mrtolkien@users.noreply.github.com";
         };
         init.defaultBranch = "main";
         core = {
