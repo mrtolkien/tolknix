@@ -40,6 +40,6 @@
   programs.aerospace = {
     enable = true;
     launchd.enable = true;
-    userSettings = builtins.fromTOML (builtins.readFile ./dotfiles/aerospace.toml);
+    settings = builtins.fromTOML (builtins.readFile ./dotfiles/aerospace.toml);
   };
 }

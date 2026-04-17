@@ -104,6 +104,7 @@ in {
       enable = true;
       ignores = [ "*.swp" ];
       lfs = { enable = true; };
+      signing.format = null;
       settings = {
         user = {
           name = "mrtolkien";
@@ -146,6 +147,8 @@ in {
       defaultEditor = true;
       viAlias = true;
       vimAlias = true;
+      withRuby = false;
+      withPython3 = false;
     };
 
     # File manager
