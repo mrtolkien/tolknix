@@ -7,8 +7,8 @@
   imports = [ ../common/home-manager.nix ];
 
   # User identity (macOS)
-  home.username = "tolki";
-  home.homeDirectory = "/Users/tolki";
+  home.username = "garymialaret";
+  home.homeDirectory = "/Users/garymialaret";
 
   # macOS-specific packages
   home.packages = pkgs.callPackage ./packages.nix { };
@@ -26,19 +26,20 @@
   # macOS-specific program overrides
   programs.fish.shellAbbrs = {
     f = "open .";  # Open in Finder
-    v = "y '/Users/tolki/Library/Mobile Documents/iCloud~md~obsidian/Documents/Vaulki'";  # Obsidian vault
+    v = "y '/Users/garymialaret/Library/Mobile Documents/iCloud~md~obsidian/Documents/Vaulki'";  # Obsidian vault
   };
 
   programs.fish.shellInit = lib.mkAfter ''
     # macOS-specific PATHs
     fish_add_path /opt/homebrew/bin # brew
     fish_add_path ~/Development/flutter/bin
-    fish_add_path /Users/tolki/.fvm_flutter/bin
+    fish_add_path /Users/garymialaret/.fvm_flutter/bin
   '';
 
   # AeroSpace window manager (macOS-only)
   programs.aerospace = {
     enable = true;
+    launchd.enable = true;
     userSettings = builtins.fromTOML (builtins.readFile ./dotfiles/aerospace.toml);
   };
 }

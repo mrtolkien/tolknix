@@ -64,7 +64,7 @@ Subsequent updates:
 home-manager switch --flake ~/.config/tolknix#tolki@cachyos
 ```
 
-### MacOS
+### macOS
 
 ```bash
 sh <(curl -L https://nixos.org/nix/install) --daemon
@@ -72,13 +72,64 @@ sh <(curl -L https://nixos.org/nix/install) --daemon
 git clone <repo-url> ~/.config/tolknix
 cd ~/.config/tolknix
 
-nix run nix-darwin -- switch --flake .#mbp
+sudo -H nix run nix-darwin -- switch --flake .#mbp
 ```
 
-Susequent updates:
+Subsequent updates:
 
 ```bash
-darwin-rebuild switch --flake .#mbp
+sudo -H darwin-rebuild switch --flake .#mbp
+```
+
+#### Changing the macOS username
+
+If the macOS account username changes, update both the nix-darwin system user
+and the Home Manager user before rebuilding.
+
+In `flake.nix`, update the Home Manager user attribute:
+
+```nix
+home-manager.users.<new-username> = import ./darwin/home.nix;
+```
+
+In `darwin/configuration.nix`, update:
+
+```nix
+users.knownUsers = [ "<new-username>" ];
+
+users.users.<new-username> = {
+  name = "<new-username>";
+  uid = 501;
+  gid = 20;
+  home = "/Users/<new-username>";
+  shell = pkgs.fish;
+};
+
+system.primaryUser = "<new-username>";
+```
+
+`users.knownUsers` is required for nix-darwin to manage an existing macOS
+account and update Directory Services fields like the login shell.
+
+In `darwin/home.nix`, update:
+
+```nix
+home.username = "<new-username>";
+home.homeDirectory = "/Users/<new-username>";
+```
+
+Then apply with:
+
+```bash
+sudo -H nix run nix-darwin -- switch --flake .#mbp
+```
+
+Open a new terminal and verify:
+
+```bash
+echo $SHELL
+echo $EDITOR
+type zoxide
 ```
 
 ## Usage
@@ -96,7 +147,7 @@ nix flake update nixpkgs
 
 # Then rebuild to apply
 # macOS:
-darwin-rebuild switch --flake .#mbp
+sudo -H darwin-rebuild switch --flake .#mbp
 
 # Linux:
 home-manager switch --flake .#tolki@cachyos
@@ -114,8 +165,8 @@ Add to `darwin/packages.nix` or `linux/packages.nix`
 
 **macOS:**
 ```bash
-darwin-rebuild --list-generations
-darwin-rebuild switch --flake .#mbp --rollback
+sudo -H darwin-rebuild --list-generations
+sudo -H darwin-rebuild switch --flake .#mbp --rollback
 ```
 
 **Linux:**

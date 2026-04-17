@@ -4,17 +4,17 @@
   nix = {
 
     # Necessary for using flakes on this system.
-    enable = true;
-    settings.experimental-features = "nix-command flakes";
-    gc = {
-      automatic = true;
-      interval = {
-        Weekday = 0;
-        Hour = 23;
-        Minute = 0;
-      };
-      options = "--delete-older-than 30d";
-    };
+    enable = false;
+    # settings.experimental-features = "nix-command flakes";
+    # gc = {
+      # automatic = true;
+      # interval = {
+        # Weekday = 0;
+        # Hour = 23;
+        # Minute = 0;
+      # };
+      # options = "--delete-older-than 30d";
+    # };
   };
 
   # Enable fonts dir
@@ -28,14 +28,17 @@
   environment.shells = [ pkgs.fish ];
   # TODO: services.karabiner-elements.enable = true;
 
-  users.users.tolki = {
-    name = "tolki";
-    home = "/Users/tolki";
+  users.knownUsers = [ "garymialaret" ];
+  users.users.garymialaret = {
+    name = "garymialaret";
+    uid = 501;
+    gid = 20;
+    home = "/Users/garymialaret";
     shell = pkgs.fish;
   };
 
   system = {
-    primaryUser = "tolki";
+    primaryUser = "garymialaret";
     stateVersion = 4;
 
     # MacOS system configuration

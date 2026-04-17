@@ -21,7 +21,7 @@
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-            home-manager.users.tolki = import ./darwin/home.nix;
+            home-manager.users.garymialaret = import ./darwin/home.nix;
             home-manager.backupFileExtension = ".bak";
             home-manager.extraSpecialArgs = { inherit inputs; };
           }
