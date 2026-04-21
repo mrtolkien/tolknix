@@ -149,6 +149,7 @@ in {
       vimAlias = true;
       withRuby = false;
       withPython3 = false;
+      sideloadInitLua = false;
     };
 
     # File manager
