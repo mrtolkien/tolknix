@@ -77,6 +77,9 @@ in {
     tealdeer.enable = true;
     fastfetch.enable = true;
 
+    # Node bloatware
+    bun.enable = true;
+
     # Terminal multiplexer
     zellij.enable = true;
 
@@ -91,6 +94,7 @@ in {
     };
 
     # Editor
+    # TODO: Likely remove...
     helix = {
       enable = true;
       settings =
@@ -149,7 +153,7 @@ in {
       vimAlias = true;
       withRuby = false;
       withPython3 = false;
-      sideloadInitLua = false;
+      sideloadInitLua = true;
     };
 
     # File manager

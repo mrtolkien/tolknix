@@ -18,7 +18,8 @@ customCommands:
             description: "Other changes that don't modify src or test files"
             value: "chore"
           - name: "build"
-            description: "Changes that affect the build system or external dependencies"
+            description:
+              "Changes that affect the build system or external dependencies"
             value: "build"
           - name: "ci"
             description: "Changes to CI configuration files and scripts"
@@ -30,7 +31,8 @@ customCommands:
             description: "A code change that improves performance"
             value: "perf"
           - name: "refactor"
-            description: "A code change that neither fixes a bug nor adds a feature"
+            description:
+              "A code change that neither fixes a bug nor adds a feature"
             value: "refactor"
           - name: "revert"
             description: "Reverts a previous commit"
@@ -59,7 +61,9 @@ customCommands:
         key: "Confirm"
         title: "Commit"
         body: "Are you sure you want to commit?"
-    command: "git commit --message '{{.Form.Type}}{{ if .Form.Scope }}({{ .Form.Scope }}){{ end }}{{.Form.Breaking}}: {{.Form.Message}}'"
+    command:
+      "git commit --message '{{.Form.Type}}{{ if .Form.Scope }}({{ .Form.Scope
+      }}){{ end }}{{.Form.Breaking}}: {{.Form.Message}}'"
     loadingText: "Creating conventional commit..."
 
 # Config relating to the Lazygit UI
@@ -359,7 +363,9 @@ git:
   autoStageResolvedConflicts: true
 
   # Command used when displaying the current branch git log in the main window
-  branchLogCmd: git log --graph --color=always --abbrev-commit --decorate --date=relative --pretty=medium {{branchName}} --
+  branchLogCmd:
+    git log --graph --color=always --abbrev-commit --decorate --date=relative
+    --pretty=medium {{branchName}} --
 
   # Command used to display git log of all branches in the main window.
   # Deprecated: Use `allBranchesLogCmds` instead.
@@ -641,7 +647,7 @@ keybinding:
     markCommitAsBaseForRebase: B
     tagCommit: T
     checkoutCommit: <space>
-    resetCherryPick: <c-R>
+    # resetCherryPick: <c-R>
     copyCommitAttributeToClipboard: "y"
     openLogMenu: <c-l>
     openInBrowser: o
