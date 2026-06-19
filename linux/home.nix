@@ -59,15 +59,15 @@
       '';
   };
 
-  # GTK theming (so Thunar and other GTK apps look right)
-  gtk = {
-    enable = true;
-    theme = { name = "Adwaita-dark"; };
-    iconTheme = {
-      package = pkgs.papirus-icon-theme;
-      name = "Papirus-Dark";
-    };
-  };
+  # # GTK theming (so Thunar and other GTK apps look right)
+  # gtk = {
+  #   enable = true;
+  #   theme = { name = "Adwaita-dark"; };
+  #   iconTheme = {
+  #     package = pkgs.papirus-icon-theme;
+  #     name = "Papirus-Dark";
+  #   };
+  # };
 
   # Desktop entry for opening files in nvim via ghostty
   xdg.desktopEntries.nvim-ghostty = {
@@ -144,7 +144,7 @@
   };
 
   services = {
-    hypridle.enable = true;
+    # hypridle.enable = true;
     # hyprpaper = {
     #   enable = false;
     #   package = null; # Use system hyprpaper for Hyprland ABI compatibility
