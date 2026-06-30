@@ -130,16 +130,16 @@
 
   # home-manager managed programs
   programs = {
-    waybar = {
-      enable = true;
-      systemd.enable = true;
-    };
+    # waybar = {
+    #   enable = true;
+    #   systemd.enable = true;
+    # };
     # TODO: Re-enable if it works again LUL
     # vicinae = {
     #   enable = true;
     #   systemd.enable = true;
     # };
-    hyprlock.enable = true;
+    # hyprlock.enable = true;
     hyprshot.enable = true;
   };
 
@@ -164,7 +164,7 @@
     #     ];
     #   };
     # };
-    swaync.enable = true;
+    # swaync.enable = true;
     hyprpolkitagent.enable = true;
   };
   systemd = {

@@ -12,6 +12,7 @@ with pkgs; [
   bacon
   broot
   todoist
+  dragon-drop
 
   # System utilities
   killall
@@ -23,6 +24,7 @@ with pkgs; [
   btop
   nvtopPackages.full
   ttyd
+  bitwarden-cli
 
   viu # Two tools for showing images in terminal, still WiP
   chafa
