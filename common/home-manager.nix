@@ -69,7 +69,10 @@ in {
     };
 
     # Shell enhancements
-    fzf.enable = true;
+    fzf = {
+      enable = true;
+      historyWidget.command="";
+    };
     lsd.enable = true;
     direnv.enable = true;
     zoxide.enable = true;
