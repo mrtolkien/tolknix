@@ -39,6 +39,7 @@
     # Hyprland selects this layout with: kb_layout = us_macos
     file.".config/xkb/symbols/us_macos".source =
       ./dotfiles/xkb-custom-macos;
+
   };
 
   # # GTK theming (so Thunar and other GTK apps look right)
@@ -100,8 +101,18 @@
     };
   };
 
+  # Replace only paru's stale service-enablement symlink; this is not an app
+  # settings file, and must point at the Home Manager unit after migration.
+  xdg.configFile."systemd/user/graphical-session.target.wants/vicinae.service".force =
+    true;
+
   # Fonts
   fonts.fontconfig.enable = true;
+
+  # Make Nix-installed graphical applications work on non-NixOS hosts. The
+  # default Mesa driver set supports AMD, Intel, and Nouveau without tying this
+  # configuration to the currently installed GPU.
+  targets.genericLinux.gpu.enable = true;
 
   # Japanese IME (fcitx5 with mozc)
   i18n.inputMethod = {
@@ -116,11 +127,18 @@
     #   enable = true;
     #   systemd.enable = true;
     # };
-    # TODO: Re-enable if it works again LUL
-    # vicinae = {
-    #   enable = true;
-    #   systemd.enable = true;
-    # };
+    # Keep Noctalia's existing mutable config and Hyprland autostart. With no
+    # settings declared here, Home Manager only installs the package.
+    noctalia.enable = true;
+
+    # Keep Vicinae's existing mutable config; Home Manager installs the package
+    # and owns the daemon service without generating a settings file.
+    vicinae = {
+      enable = true;
+      # Leave the existing browser native-messaging manifests untouched.
+      enableFirefoxIntegration = false;
+      systemd.enable = true;
+    };
     # hyprlock.enable = true;
     hyprshot.enable = true;
   };
@@ -182,4 +200,5 @@
       };
     };
   };
+
 }
