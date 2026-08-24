@@ -181,12 +181,12 @@ This is a **cross-platform Nix configuration** supporting:
 **Shell Additions:**
 
 - PATH: Standard Linux paths + Bun, uvx
-- Activation script: Installs keyboard layout to /usr/share/X11/xkb/symbols/us_macos
+- Home Manager installs the keyboard layout in ~/.config/xkb/symbols/us_macos
 
 **Keyboard Layout:**
 
 - Custom us_macos layout for macOS-style accents
-- AltGr-based dead keys (e → é, i → î, u → ü, c → ç)
+- AltGr-based dead keys and macOS US symbols (œ, æ, €)
 
 **Tools:**
 
@@ -309,8 +309,8 @@ See `linux/hyprland/README.md` for migration plan.
 
 ### Keyboard Layout Issues (Linux)
 
-- Check installation: `ls -l /usr/share/X11/xkb/symbols/us_macos`
-- Reinstall: Run activation script manually or `home-manager switch` again
+- Check installation: `ls -l ~/.config/xkb/symbols/us_macos`
+- Reinstall: Run `home-manager switch` again
 - Verify Hyprland config: `hyprctl getoption input:kb_layout`
 
 ## Development Workflow

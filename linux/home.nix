@@ -35,28 +35,10 @@
     packages = (pkgs.callPackage ./packages.nix { })
       ++ (with pkgs; [ monaspace ]);
 
-    # Linux-specific dotfiles
-    file.".config/xkb-custom-macos".source = ./dotfiles/xkb-custom-macos;
-
-    # Activation script to install keyboard layout system-wide
-    # This requires sudo, so it will prompt during home-manager switch
-    activation.installKeyboardLayout =
-      lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-        LAYOUT_SRC="$HOME/.config/xkb-custom-macos"
-        LAYOUT_DEST="/usr/share/X11/xkb/symbols/us_macos"
-
-        if [ -f "$LAYOUT_SRC" ]; then
-          if ! diff -q "$LAYOUT_SRC" "$LAYOUT_DEST" >/dev/null 2>&1; then
-            echo "Installing custom keyboard layout (requires sudo)..."
-            if sudo cp "$LAYOUT_SRC" "$LAYOUT_DEST"; then
-              echo "✓ Keyboard layout installed to $LAYOUT_DEST"
-              echo "  Use 'kb_layout = us_macos' in Hyprland config"
-            else
-              echo "⚠ Failed to install keyboard layout (sudo required)"
-            fi
-          fi
-        fi
-      '';
+    # libxkbcommon (and therefore Hyprland) loads per-user layouts from here.
+    # Hyprland selects this layout with: kb_layout = us_macos
+    file.".config/xkb/symbols/us_macos".source =
+      ./dotfiles/xkb-custom-macos;
   };
 
   # # GTK theming (so Thunar and other GTK apps look right)
