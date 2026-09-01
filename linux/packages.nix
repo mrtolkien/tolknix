@@ -8,9 +8,6 @@ with pkgs; [
   # TUI managers
   bluetui
   pulsemixer
-  # GUI stuff
-  networkmanagerapplet # Network manager system tray
-  blueman # Bluetooth manager system tray
   # File manager
   thunar
   thunar-volman # Removable media management

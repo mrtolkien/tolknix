@@ -127,9 +127,12 @@
     #   enable = true;
     #   systemd.enable = true;
     # };
-    # Keep Noctalia's existing mutable config and Hyprland autostart. With no
-    # settings declared here, Home Manager only installs the package.
-    noctalia.enable = true;
+    # Keep Noctalia's mutable GUI configuration and Hyprland autostart, while
+    # declaring the native polkit authentication agent as the default.
+    noctalia = {
+      enable = true;
+      settings.shell.polkit_agent = true;
+    };
 
     # Keep Vicinae's existing mutable config; Home Manager installs the package
     # and owns the daemon service without generating a settings file.
@@ -165,7 +168,6 @@
     #   };
     # };
     # swaync.enable = true;
-    hyprpolkitagent.enable = true;
   };
   systemd = {
     user = {
