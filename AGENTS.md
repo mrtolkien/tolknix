@@ -239,23 +239,13 @@ programs.fish.shellInit = lib.mkAfter ''
 
 Changes take effect on next build/switch.
 
-## Migration Strategy (Linux)
+## Linux Configuration Ownership
 
-The Linux configuration is designed for **gradual migration**:
-
-### Current State (Phase 1)
-
-- ✅ home-manager manages shell tools, editors, CLI utilities
-- ❌ Hyprland remains in `~/.config/hypr/` (not nix-managed)
-- ❌ System packages stay with pacman/yay
-
-### Future State (Phase 2)
-
-- Move Hyprland configs to `linux/hyprland/`
-- Uncomment home.file sections in `linux/home.nix`
-- home-manager links Hyprland configs
-
-See `linux/hyprland/README.md` for migration plan.
+- Home Manager manages shell tools, editors, CLI utilities, desktop entries,
+  and selected desktop services.
+- Hyprland is managed independently in its own repository at
+  `~/.config/hypr/`; do not duplicate it in this repository.
+- System packages that are not suitable for Nix remain managed by pacman/yay.
 
 ## Important Notes
 

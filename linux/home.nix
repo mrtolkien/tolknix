@@ -52,59 +52,61 @@
   #   };
   # };
 
-  # Desktop entry for opening files in nvim via ghostty
-  xdg.desktopEntries.nvim-ghostty = {
-    name = "Neovim (Ghostty)";
-    genericName = "Text Editor";
-    exec = "ghostty -e nvim %F";
-    terminal = false;
-    categories = [ "Utility" "TextEditor" ];
-    mimeType = [ "text/plain" "text/x-script" "application/x-shellscript" ];
-  };
-
-  # XDG MIME associations
-  xdg.mimeApps = {
-    enable = true;
-    defaultApplications = {
-      # PDF → Firefox
-      "application/pdf" = [ "firefox.desktop" ];
-      # Text files → nvim in ghostty
-      "text/plain" = [ "nvim-ghostty.desktop" ];
-      "text/x-script" = [ "nvim-ghostty.desktop" ];
-      "application/x-shellscript" = [ "nvim-ghostty.desktop" ];
-      "text/x-python" = [ "nvim-ghostty.desktop" ];
-      "text/x-csrc" = [ "nvim-ghostty.desktop" ];
-      "text/x-chdr" = [ "nvim-ghostty.desktop" ];
-      "text/x-java" = [ "nvim-ghostty.desktop" ];
-      "text/x-makefile" = [ "nvim-ghostty.desktop" ];
-      "text/x-markdown" = [ "nvim-ghostty.desktop" ];
-      "text/xml" = [ "nvim-ghostty.desktop" ];
-      "application/json" = [ "nvim-ghostty.desktop" ];
-      "application/x-yaml" = [ "nvim-ghostty.desktop" ];
-      "application/toml" = [ "nvim-ghostty.desktop" ];
-      # Web
-      "text/html" = [ "firefox.desktop" ];
-      "x-scheme-handler/http" = [ "firefox.desktop" ];
-      "x-scheme-handler/https" = [ "firefox.desktop" ];
-      # Images → default viewer (loupe/eog)
-      "image/png" = [ "org.gnome.Loupe.desktop" ];
-      "image/jpeg" = [ "org.gnome.Loupe.desktop" ];
-      "image/gif" = [ "org.gnome.Loupe.desktop" ];
-      "image/webp" = [ "org.gnome.Loupe.desktop" ];
-      "image/svg+xml" = [ "org.gnome.Loupe.desktop" ];
-      # Scheme handlers
-      "x-scheme-handler/terminal" = [ "Ghostty.desktop" ];
-      "x-scheme-handler/todoist" = [ "todoist.desktop" ];
-      "x-scheme-handler/com.todoist" = [ "todoist.desktop" ];
-      # File manager
-      "inode/directory" = [ "thunar.desktop" ];
+  xdg = {
+    # Desktop entry for opening files in nvim via ghostty
+    desktopEntries.nvim-ghostty = {
+      name = "Neovim (Ghostty)";
+      genericName = "Text Editor";
+      exec = "ghostty -e nvim %F";
+      terminal = false;
+      categories = [ "Utility" "TextEditor" ];
+      mimeType = [ "text/plain" "text/x-script" "application/x-shellscript" ];
     };
-  };
 
-  # Replace only paru's stale service-enablement symlink; this is not an app
-  # settings file, and must point at the Home Manager unit after migration.
-  xdg.configFile."systemd/user/graphical-session.target.wants/vicinae.service".force =
-    true;
+    # XDG MIME associations
+    mimeApps = {
+      enable = true;
+      defaultApplications = {
+        # PDF → Firefox
+        "application/pdf" = [ "firefox.desktop" ];
+        # Text files → nvim in ghostty
+        "text/plain" = [ "nvim-ghostty.desktop" ];
+        "text/x-script" = [ "nvim-ghostty.desktop" ];
+        "application/x-shellscript" = [ "nvim-ghostty.desktop" ];
+        "text/x-python" = [ "nvim-ghostty.desktop" ];
+        "text/x-csrc" = [ "nvim-ghostty.desktop" ];
+        "text/x-chdr" = [ "nvim-ghostty.desktop" ];
+        "text/x-java" = [ "nvim-ghostty.desktop" ];
+        "text/x-makefile" = [ "nvim-ghostty.desktop" ];
+        "text/x-markdown" = [ "nvim-ghostty.desktop" ];
+        "text/xml" = [ "nvim-ghostty.desktop" ];
+        "application/json" = [ "nvim-ghostty.desktop" ];
+        "application/x-yaml" = [ "nvim-ghostty.desktop" ];
+        "application/toml" = [ "nvim-ghostty.desktop" ];
+        # Web
+        "text/html" = [ "firefox.desktop" ];
+        "x-scheme-handler/http" = [ "firefox.desktop" ];
+        "x-scheme-handler/https" = [ "firefox.desktop" ];
+        # Images → default viewer (loupe/eog)
+        "image/png" = [ "org.gnome.Loupe.desktop" ];
+        "image/jpeg" = [ "org.gnome.Loupe.desktop" ];
+        "image/gif" = [ "org.gnome.Loupe.desktop" ];
+        "image/webp" = [ "org.gnome.Loupe.desktop" ];
+        "image/svg+xml" = [ "org.gnome.Loupe.desktop" ];
+        # Scheme handlers
+        "x-scheme-handler/terminal" = [ "Ghostty.desktop" ];
+        "x-scheme-handler/todoist" = [ "com.todoist.Todoist.desktop" ];
+        "x-scheme-handler/com.todoist" = [ "com.todoist.Todoist.desktop" ];
+        # File manager
+        "inode/directory" = [ "thunar.desktop" ];
+      };
+    };
+
+    # Replace only paru's stale service-enablement symlink; this is not an app
+    # settings file, and must point at the Home Manager unit after migration.
+    configFile."systemd/user/graphical-session.target.wants/vicinae.service".force =
+      true;
+  };
 
   # Fonts
   fonts.fontconfig.enable = true;

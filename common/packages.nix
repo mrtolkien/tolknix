@@ -2,16 +2,12 @@
 
 # Shared CLI tools and utilities for both macOS and Linux
 with pkgs; [
-  # File management (yazi, lsd managed via programs.* in home-manager.nix)
-  # TODO: Review which can have shell integration w/ home manager
+  # Use programs.* in home-manager.nix for tools that need configuration or
+  # shell integration; keep install-only tools in this package list.
   fd
   ripgrep
   bat
   less
-  tealdeer
-  bacon
-  broot
-  todoist
   dragon-drop
 
   # System utilities
@@ -23,37 +19,36 @@ with pkgs; [
   unzip
   btop
   nvtopPackages.full
-  ttyd
   bitwarden-cli
 
-  viu # Two tools for showing images in terminal, still WiP
   chafa
 
   # Data tools
   jq
-  rclone
-  croc
-
-  # Documentation and publishing
-  pandoc
   hugo
 
   # Git and version control
   gh
-  git-open
-  pre-commit
-
-  # Build and deploy
-  awscli2
 
   # Data
   postgresql_17
 
   # Programming languages
-  cargo-lambda
-  zig
   statix
 
-  # CPP
+  # Candidates for removal; keep installed until their usage is confirmed.
+  bacon
+  broot
+  todoist
+  ttyd
+  viu
+  rclone
+  croc
+  pandoc
+  git-open
+  pre-commit
+  awscli2
+  cargo-lambda
+  zig
   cmake
 ]

@@ -132,11 +132,6 @@ symlink-arrow: ⇒
 # Whether to display block headers.
 # Possible values: false, true
 header: false
-# TODO This was causing issues
-# == Literal ==
-# Whether to show quotes on filenames.
-# Possible values: false, true
-# literal: false
 
 # == Truncate owner ==
 # How to truncate the username and group names for a file if they exceed a certain

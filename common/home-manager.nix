@@ -1,9 +1,6 @@
-{ pkgs, inputs, ... }:
+{ pkgs, ... }:
 
-let
-  name = "mrtolkien";
-  email = "gary.mialaret@gmail.com";
-in {
+{
   # Shared home-manager configuration for both macOS and Linux
   # Platform-specific configs import this and add overrides
 
@@ -16,7 +13,7 @@ in {
     # (darwin/configuration.nix for macOS, flake.nix for Linux)
 
     # Shared packages
-    packages = (pkgs.callPackage ./packages.nix { });
+    packages = pkgs.callPackage ./packages.nix { };
 
     # Shared dotfiles
     file = {
@@ -83,7 +80,7 @@ in {
     # Node bloatware
     bun.enable = true;
 
-    # Terminal multiplexer
+    # Candidate for removal; keep installed until its usage is confirmed.
     zellij.enable = true;
 
     # Git tools
@@ -94,16 +91,6 @@ in {
       enable = true;
       enableTransience = true; # Replaces previous prompts with custom string
       settings = builtins.fromTOML (builtins.readFile ./dotfiles/starship.toml);
-    };
-
-    # Editor
-    # TODO: Likely remove...
-    helix = {
-      enable = true;
-      settings =
-        builtins.fromTOML (builtins.readFile ./dotfiles/helix/config.toml);
-      languages =
-        builtins.fromTOML (builtins.readFile ./dotfiles/helix/languages.toml);
     };
 
     # Git configuration

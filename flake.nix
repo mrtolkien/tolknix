@@ -9,7 +9,7 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = inputs@{ nixpkgs, home-manager, darwin, ... }: {
+  outputs = { nixpkgs, home-manager, darwin, ... }: {
     # macOS configuration via nix-darwin + home-manager
     darwinConfigurations = {
       mbp = darwin.lib.darwinSystem {
@@ -19,11 +19,12 @@
           ./darwin/configuration.nix
           home-manager.darwinModules.home-manager
           {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.garymialaret = import ./darwin/home.nix;
-            home-manager.backupFileExtension = ".bak";
-            home-manager.extraSpecialArgs = { inherit inputs; };
+            home-manager = {
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              users.garymialaret = import ./darwin/home.nix;
+              backupFileExtension = ".bak";
+            };
           }
         ];
       };
@@ -36,7 +37,6 @@
           system = "x86_64-linux";
           config.allowUnfree = true;
         };
-        extraSpecialArgs = { inherit inputs; };
         modules = [
           ./linux/home.nix
           {
