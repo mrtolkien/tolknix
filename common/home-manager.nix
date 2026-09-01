@@ -156,7 +156,7 @@
       shellWrapperName = "y";
 
       settings = {
-        mgr = { show_hidden = true; };
+        mgr = { show_hidden = true; linemode = "mtime"; };
         preview = {
           max_width = 1000;
           max_height = 1000;
