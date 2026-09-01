@@ -1,6 +1,6 @@
-# CLAUDE.md
+# AGENTS.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+This file provides guidance to coding agents when working with code in this repository.
 
 ## Essential tool
 
@@ -78,9 +78,9 @@ This is a **cross-platform Nix configuration** supporting:
 
 **Shared Configurations (common/):**
 
-- **packages.nix**: CLI tools for both platforms (fish, git, helix, etc.)
+- **packages.nix**: CLI tools for both platforms (fish, git, etc.)
 - **home-manager.nix**: Program configurations (shell, editors, git settings)
-- **dotfiles/**: Config files (starship, ghostty, helix, lazygit, lsd)
+- **dotfiles/**: Config files (starship, ghostty, lazygit, lsd)
   - Uses Linux colorful starship.toml as standard
   - Ghostty includes custom cursor shader (cursor_blaze.glsl)
 
@@ -97,7 +97,7 @@ This is a **cross-platform Nix configuration** supporting:
 - **home.nix**: Linux home-manager entry (imports common + adds overrides)
 - **packages.nix**: Linux-only packages (solaar)
 - **dotfiles/**: Custom keyboard layout (us_macos for accents)
-- **hyprland/**: Prepared for future migration (not yet active)
+- Hyprland is NOT in this repository (managed separately at `~/.config/hypr/`)
 
 ### Key Configuration Patterns
 

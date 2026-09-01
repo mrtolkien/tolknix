@@ -78,6 +78,9 @@
     tealdeer.enable = true;
     fastfetch.enable = true;
 
+    # AI harness
+    "pi-coding-agent".enable = true;
+
     # Node bloatware
     bun.enable = true;
 
