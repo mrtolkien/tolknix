@@ -47,6 +47,7 @@
         # Add Nix profile to PATH first (critical for home-manager packages)
         fish_add_path ~/.nix-profile/bin
         fish_add_path /nix/var/nix/profiles/default/bin
+        fish_add_path fish_add_path $(go env GOBIN)
 
         function fish_greeting
             fastfetch
