@@ -106,7 +106,7 @@
       settings = {
         user = {
           name = "mrtolkien";
-          email = "164381380+mrtolkien@users.noreply.github.com";
+          email = "8489650+mrtolkien@users.noreply.github.com";
         };
         init.defaultBranch = "main";
         core = {
