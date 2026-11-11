@@ -48,7 +48,6 @@ with pkgs; [
   git-open
   pre-commit
   awscli2
-  cargo-lambda
   zig
   cmake
 ]

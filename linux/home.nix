@@ -40,6 +40,14 @@
     file.".config/xkb/symbols/us_macos".source =
       ./dotfiles/xkb-custom-macos;
 
+    # Hyprland's Lua configuration. Linked file by file so the directory stays
+    # writable: Noctalia regenerates ~/.config/hypr/noctalia.lua there, and
+    # hyprland.lua also loads ~/.hypr/temp.lua when present for quick tests.
+    file.".config/hypr" = {
+      source = ./dotfiles/hypr;
+      recursive = true;
+    };
+
   };
 
   # # GTK theming (so Thunar and other GTK apps look right)
@@ -129,11 +137,20 @@
     #   enable = true;
     #   systemd.enable = true;
     # };
-    # Keep Noctalia's mutable GUI configuration and Hyprland autostart, while
-    # declaring the native polkit authentication agent as the default.
+    # Noctalia is started by Hyprland's autostart. These settings are the
+    # declarative base layer; changes made in the settings UI are still saved
+    # to ~/.local/state/noctalia/settings.toml and win over this file.
+    #
+    # To keep UI changes:
+    #   noctalia config export > ~/tolknix/linux/dotfiles/noctalia.toml
+    #   home-manager switch --flake ~/.config/tolknix#tolki@cachyos
+    #   rm ~/.local/state/noctalia/settings.toml
+    #
+    # The rm clears the UI overrides, which would otherwise keep shadowing
+    # the same keys here.
     noctalia = {
       enable = true;
-      settings.shell.polkit_agent = true;
+      settings = ./dotfiles/noctalia.toml;
     };
 
     # Keep Vicinae's existing mutable config; Home Manager installs the package

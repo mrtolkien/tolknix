@@ -1,0 +1,204 @@
+[audio]
+enable_sounds = false
+
+[bar]
+order = [ "BaseBar" ]
+
+    [bar.BaseBar]
+    background_opacity = 0.90000000000000002
+    center = [ "taskbar" ]
+    end = [ "cpu", "sysmon", "ram", "media", "notifications", "bluetooth", "volume", "brightness", "spacer_4", "session" ]
+    font_weight = 700
+    margin_edge = 2
+    margin_ends = 50
+    position = "left"
+    start = [ "clock", "spacer_3", "weather", "spacer_2", "tray" ]
+    widget_spacing = 10
+
+        [bar.BaseBar.monitor.DP-3]
+        end = [ "notifications", "network", "bluetooth", "volume", "brightness", "control-center", "session" ]
+        position = "top"
+
+[battery.device."/org/freedesktop/UPower/devices/battery_hidpp_battery_0"]
+warning_threshold = 10
+
+[brightness]
+enable_ddcutil = true
+
+[desktop_widgets]
+enabled = false
+
+[location]
+address = "Tokyo, Japan"
+
+[lockscreen_widgets]
+enabled = false
+schema_version = 2
+widget_order = [ "lockscreen-login-box@DP-3", "lockscreen-login-box@DP-2" ]
+
+    [lockscreen_widgets.grid]
+    cell_size = 16
+    major_interval = 4
+    visible = true
+
+    [lockscreen_widgets.widget."lockscreen-login-box@DP-2"]
+    box_height = 196.0
+    box_width = 720.0
+    cx = 1280.0
+    cy = 1321.0
+    output = "DP-2"
+    placement_height = 1440.0
+    placement_width = 2560.0
+    rotation = 0.0
+    type = "login_box"
+
+        [lockscreen_widgets.widget."lockscreen-login-box@DP-2".settings]
+        background_color = "surface_container"
+        background_opacity = 0.88
+        background_radius = 12.0
+        center_password_text = false
+        input_opacity = 1.0
+        input_radius = 6.0
+        layout = "regular"
+        show_caps_lock = true
+        show_keyboard_layout = true
+        show_login_button = true
+        show_media = true
+        show_session_buttons = true
+        show_unlock_hint = true
+        show_weather = true
+
+    [lockscreen_widgets.widget."lockscreen-login-box@DP-3"]
+    box_height = 196.0
+    box_width = 720.0
+    cx = 720.0
+    cy = 2441.0
+    output = "DP-3"
+    placement_height = 2560.0
+    placement_width = 1440.0
+    rotation = 0.0
+    type = "login_box"
+
+        [lockscreen_widgets.widget."lockscreen-login-box@DP-3".settings]
+        background_color = "surface_container"
+        background_opacity = 0.88
+        background_radius = 12.0
+        center_password_text = false
+        input_opacity = 1.0
+        input_radius = 6.0
+        layout = "regular"
+        show_caps_lock = true
+        show_keyboard_layout = true
+        show_login_button = true
+        show_media = true
+        show_session_buttons = true
+        show_unlock_hint = true
+        show_weather = true
+
+[notification]
+background_opacity = 0.89999997988343239
+position = "top_left"
+
+[osd]
+orientation = "vertical"
+position_vertical = "bottom_left"
+
+    [osd.kinds]
+    media = false
+
+[plugins]
+enabled = [ "noctalia/screen_recorder", "noctalia/wallpaper_depth", "noctalia/wallhaven" ]
+
+[shell]
+avatar_path = "/home/tolki/Development/keyboards/tolkeebs-website/assets/images/tolki.webp"
+clipboard_enabled = false
+polkit_agent = true
+settings_show_advanced = false
+telemetry_enabled = true
+
+    [shell.panel]
+    open_near_click_session = true
+    transparency_mode = "glass"
+
+    [shell.screenshot]
+    save_to_file = false
+
+[theme]
+builtin = "Catppuccin"
+community_palette = "Oxocarbon"
+mode = "dark"
+source = "builtin"
+wallpaper_scheme = "m3-content"
+
+    [theme.templates]
+    builtin_ids = [ "gtk3", "gtk4", "hyprland", "kcolorscheme", "qt" ]
+    community_ids = [ "pi-agent", "pywalfox", "discord", "yazi" ]
+
+[wallpaper]
+directory = "/home/tolki/Pictures/wallpapers/horizontal"
+per_monitor_directories = true
+
+    [wallpaper.default]
+    path = "/home/tolki/Pictures/wallpapers/horizontal/5g22q5.png"
+
+    [wallpaper.last]
+    path = "/home/tolki/Pictures/wallpapers/vertical/lqx1d2.jpg"
+
+    [wallpaper.monitor.DP-2]
+    directory = "/home/tolki/Pictures/wallpapers/horizontal"
+
+    [wallpaper.monitor.DP-3]
+    directory = "/home/tolki/Pictures/wallpapers/vertical"
+
+    [wallpaper.monitors.DP-2]
+    path = "/home/tolki/Pictures/wallpapers/horizontal/5g22q5.png"
+
+    [wallpaper.monitors.DP-3]
+    path = "/home/tolki/Pictures/wallpapers/vertical/lqx1d2.jpg"
+
+[widget.active_window]
+icon_size = 24.0
+
+[widget.audio_visualizer]
+capsule = true
+mirrored = false
+show_when_idle = true
+
+[widget.clock]
+format = "{:%H:%M   %-m月%d日 (%a) }"
+vertical_format = "{:%H\\n%M\\n\\n%-m\\n月\\n%d\\n日\\n%a}"
+
+[widget.network]
+show_label = false
+
+[widget.spacer_2]
+length = 30
+type = "spacer"
+
+[widget.spacer_3]
+length = 30
+type = "spacer"
+
+[widget.spacer_4]
+type = "spacer"
+
+[widget.sysmon]
+show_value = false
+stat = "gpu_usage"
+
+[widget.taskbar]
+capsule_radius = 8
+group_by_workspace = true
+group_single_icon_per_app = true
+icon_scale = 1.1000000000000001
+minimal = true
+show_active_indicator = false
+show_workspace_label = false
+workspace_label_placement = "inside"
+
+[widget.volume]
+mute_color = "tertiary"
+
+[widget.workspaces]
+empty_color = "tertiary"
+labels_only_when_occupied = true

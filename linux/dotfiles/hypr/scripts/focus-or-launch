@@ -1,0 +1,83 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+usage() {
+	cat >&2 <<'EOF'
+Usage: focus-or-launch CLASS_REGEX -- COMMAND [ARG ...]
+
+Focus the most recently used Hyprland window whose class or initialClass
+matches CLASS_REGEX. If none exists, launch COMMAND in the background.
+
+Example:
+  focus-or-launch '^(discord|com\.discordapp\.Discord)$' -- \
+    flatpak run com.discordapp.Discord
+EOF
+}
+
+if (( $# < 3 )) || [[ $2 != -- ]]; then
+	usage
+	exit 2
+fi
+
+class_regex=$1
+shift 2
+
+for dependency in hyprctl jq; do
+	if ! command -v "$dependency" >/dev/null 2>&1; then
+		printf 'focus-or-launch: required command not found: %s\n' "$dependency" >&2
+		exit 127
+	fi
+done
+
+if ! jq -en --arg regex "$class_regex" 'try ("" | test($regex) | true) catch false' >/dev/null 2>&1; then
+	printf 'focus-or-launch: invalid class regex: %s\n' "$class_regex" >&2
+	exit 2
+fi
+
+if ! clients_json=$(hyprctl clients -j); then
+	printf 'focus-or-launch: failed to query Hyprland clients\n' >&2
+	exit 1
+fi
+
+if ! address=$(jq -er --arg regex "$class_regex" '
+	[
+		.[]
+		| select(
+			((.class // "") | test($regex; "i"))
+			or ((.initialClass // "") | test($regex; "i"))
+		)
+	]
+	| sort_by(.focusHistoryID // 2147483647)
+	| first
+	| .address
+' <<<"$clients_json" 2>/dev/null); then
+	address=
+fi
+
+# Leader Key may invoke this while Vicinae is still in the foreground.
+vicinae close >/dev/null 2>&1 || true
+
+if [[ -n $address ]]; then
+	if [[ ! $address =~ ^0x[[:xdigit:]]+$ ]]; then
+		printf 'focus-or-launch: Hyprland returned an invalid address: %s\n' "$address" >&2
+		exit 1
+	fi
+
+	result=$(hyprctl dispatch "hl.dsp.focus({ window = \"address:$address\" })" 2>&1) || true
+	if [[ $result == ok ]]; then
+		exit 0
+	fi
+
+	# Compatibility with Hyprland configurations using the legacy dispatcher.
+	result=$(hyprctl dispatch focuswindow "address:$address" 2>&1) || true
+	if [[ $result == ok ]]; then
+		exit 0
+	fi
+
+	printf 'focus-or-launch: failed to focus %s: %s\n' "$address" "$result" >&2
+	exit 1
+fi
+
+# Detach GUI applications so Vicinae does not need to keep the command alive.
+nohup "$@" >/dev/null 2>&1 &
