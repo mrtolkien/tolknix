@@ -1,7 +1,9 @@
-{ pkgs }:
+{ pkgs, ... }:
 
 # macOS-specific packages
-with pkgs; [
-  # Flutter development (macOS-specific)
-  cocoapods
-]
+{
+  home.packages = with pkgs; [
+    # Flutter development (macOS-specific)
+    cocoapods
+  ];
+}

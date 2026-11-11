@@ -1,53 +1,54 @@
-{ pkgs }:
+{ pkgs, ... }:
 
 # Shared CLI tools and utilities for both macOS and Linux
-with pkgs; [
-  # Use programs.* in home-manager.nix for tools that need configuration or
-  # shell integration; keep install-only tools in this package list.
-  fd
-  ripgrep
-  bat
-  less
-  dragon-drop
+{
+  home.packages = with pkgs; [
+    # Use programs.* in home.nix for tools that need configuration or
+    # shell integration; keep install-only tools in this package list.
+    fd
+    ripgrep
+    bat
+    less
 
-  # System utilities
-  killall
-  openssh
-  wget
-  zip
-  unrar
-  unzip
-  btop
-  nvtopPackages.full
-  bitwarden-cli
+    # System utilities
+    killall
+    openssh
+    wget
+    zip
+    unrar
+    unzip
+    btop
+    nvtopPackages.full
+    bitwarden-cli
 
-  chafa
+    chafa
 
-  # Data tools
-  jq
-  hugo
+    # Data tools
+    jq
+    hugo
 
-  # Git and version control
-  gh
+    # Git and version control
+    gh
 
-  # Data
-  postgresql_17
+    # Data
+    postgresql_17
 
-  # Programming languages
-  statix
+    # Programming languages
+    statix
 
-  # Candidates for removal; keep installed until their usage is confirmed.
-  bacon
-  broot
-  todoist
-  ttyd
-  viu
-  rclone
-  croc
-  pandoc
-  git-open
-  pre-commit
-  awscli2
-  zig
-  cmake
-]
+    # Candidates for removal; keep installed until their usage is confirmed.
+    bacon
+    broot
+    todoist
+    ttyd
+    viu
+    rclone
+    croc
+    pandoc
+    git-open
+    pre-commit
+    awscli2
+    zig
+    cmake
+  ];
+}

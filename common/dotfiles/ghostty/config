@@ -35,3 +35,6 @@ window-padding-color = extend
 # Using the daemon
 gtk-single-instance=true
 
+
+# Platform overrides; the file only exists on macOS (darwin/dotfiles/ghostty/)
+config-file = ?darwin.conf

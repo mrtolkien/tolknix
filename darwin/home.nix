@@ -1,29 +1,28 @@
-{ pkgs, lib, ... }:
+{ lib, ... }:
 
 {
   # macOS-specific home-manager configuration
   # Imports common config and adds macOS-specific overrides
 
-  imports = [ ../common/home-manager.nix ];
+  imports = [
+    ../common/home.nix
+    ./packages.nix
+  ];
 
   home = {
     # User identity (macOS)
     username = "garymialaret";
     homeDirectory = "/Users/garymialaret";
 
-    # macOS-specific packages
-    packages = pkgs.callPackage ./packages.nix { };
-
-    # macOS-specific dotfiles
     file = {
-      ".config/ghostty/darwin.conf".source = ./dotfiles/ghostty-darwin.conf;
-      "Library/Application Support/lazygit/config.yml".source = ../common/dotfiles/lazygit.yml;
-
       # AeroSpace scripts
       "scripts/aerospace_horizontal.sh".source = ./scripts/aerospace_horizontal.sh;
       "scripts/aerospace_reset.sh".source = ./scripts/aerospace_reset.sh;
     };
   };
+
+  # macOS-specific dotfiles
+  xdg.configFile."ghostty/darwin.conf".source = ./dotfiles/ghostty/darwin.conf;
 
   # macOS-specific program overrides
   programs = {

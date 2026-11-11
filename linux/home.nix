@@ -1,12 +1,15 @@
-{ pkgs, lib, ... }:
+{ pkgs, ... }:
 
 {
-  # Linux-specific home-manager configuration
-  # Imports common config and adds Linux-specific overrides
+  # Linux home-manager entry point: shared config plus Linux-only modules
 
-  imports = [ ../common/home-manager.nix ];
+  imports = [
+    ../common/home.nix
+    ./packages.nix
+    ./desktop.nix
+  ];
+
   home = {
-
     # User identity
     username = "tolki";
     homeDirectory = "/home/tolki";
@@ -19,207 +22,25 @@
       monetary = "ja_JP.UTF-8"; # Japanese currency formats
       measurement = "ja_JP.UTF-8"; # Metric system
     };
-
-    # Environment variables for fcitx5 on Wayland/Hyprland
-    sessionVariables = {
-      # Explicitly unset GTK_IM_MODULE to use native Wayland input method protocol
-      # Use mkForce to override the fcitx5 module's default
-      GTK_IM_MODULE = lib.mkForce "";
-      QT_IM_MODULE = "fcitx";
-      XMODIFIERS = "@im=fcitx";
-      GLFW_IM_MODULE = "ibus"; # For some apps like Ghostty
-      FILE_MANAGER = "thunar";
-    };
-
-    # Linux-specific packages
-    packages = (pkgs.callPackage ./packages.nix { })
-      ++ (with pkgs; [ monaspace ]);
-
-    # libxkbcommon (and therefore Hyprland) loads per-user layouts from here.
-    # Hyprland selects this layout with: kb_layout = us_macos
-    file.".config/xkb/symbols/us_macos".source =
-      ./dotfiles/xkb-custom-macos;
-
-    # Hyprland's Lua configuration. Linked file by file so the directory stays
-    # writable: Noctalia regenerates ~/.config/hypr/noctalia.lua there, and
-    # hyprland.lua also loads ~/.hypr/temp.lua when present for quick tests.
-    file.".config/hypr" = {
-      source = ./dotfiles/hypr;
-      recursive = true;
-    };
-
   };
 
-  # # GTK theming (so Thunar and other GTK apps look right)
-  # gtk = {
-  #   enable = true;
-  #   theme = { name = "Adwaita-dark"; };
-  #   iconTheme = {
-  #     package = pkgs.papirus-icon-theme;
-  #     name = "Papirus-Dark";
-  #   };
-  # };
-
-  xdg = {
-    # Desktop entry for opening files in nvim via ghostty
-    desktopEntries.nvim-ghostty = {
-      name = "Neovim (Ghostty)";
-      genericName = "Text Editor";
-      exec = "ghostty -e nvim %F";
-      terminal = false;
-      categories = [ "Utility" "TextEditor" ];
-      mimeType = [ "text/plain" "text/x-script" "application/x-shellscript" ];
-    };
-
-    # XDG MIME associations
-    mimeApps = {
-      enable = true;
-      defaultApplications = {
-        # PDF → Firefox
-        "application/pdf" = [ "firefox.desktop" ];
-        # Text files → nvim in ghostty
-        "text/plain" = [ "nvim-ghostty.desktop" ];
-        "text/x-script" = [ "nvim-ghostty.desktop" ];
-        "application/x-shellscript" = [ "nvim-ghostty.desktop" ];
-        "text/x-python" = [ "nvim-ghostty.desktop" ];
-        "text/x-csrc" = [ "nvim-ghostty.desktop" ];
-        "text/x-chdr" = [ "nvim-ghostty.desktop" ];
-        "text/x-java" = [ "nvim-ghostty.desktop" ];
-        "text/x-makefile" = [ "nvim-ghostty.desktop" ];
-        "text/x-markdown" = [ "nvim-ghostty.desktop" ];
-        "text/xml" = [ "nvim-ghostty.desktop" ];
-        "application/json" = [ "nvim-ghostty.desktop" ];
-        "application/x-yaml" = [ "nvim-ghostty.desktop" ];
-        "application/toml" = [ "nvim-ghostty.desktop" ];
-        # Web
-        "text/html" = [ "firefox.desktop" ];
-        "x-scheme-handler/http" = [ "firefox.desktop" ];
-        "x-scheme-handler/https" = [ "firefox.desktop" ];
-        # Images → default viewer (loupe/eog)
-        "image/png" = [ "org.gnome.Loupe.desktop" ];
-        "image/jpeg" = [ "org.gnome.Loupe.desktop" ];
-        "image/gif" = [ "org.gnome.Loupe.desktop" ];
-        "image/webp" = [ "org.gnome.Loupe.desktop" ];
-        "image/svg+xml" = [ "org.gnome.Loupe.desktop" ];
-        # Scheme handlers
-        "x-scheme-handler/terminal" = [ "Ghostty.desktop" ];
-        "x-scheme-handler/todoist" = [ "com.todoist.Todoist.desktop" ];
-        "x-scheme-handler/com.todoist" = [ "com.todoist.Todoist.desktop" ];
-        # File manager
-        "inode/directory" = [ "thunar.desktop" ];
+  # Automatic garbage collection
+  systemd.user = {
+    services.nix-gc = {
+      Unit.Description = "Nix Garbage Collector";
+      Service = {
+        Type = "oneshot";
+        ExecStart = "${pkgs.nix}/bin/nix-collect-garbage --delete-older-than 30d";
       };
     };
 
-    # Replace only paru's stale service-enablement symlink; this is not an app
-    # settings file, and must point at the Home Manager unit after migration.
-    configFile."systemd/user/graphical-session.target.wants/vicinae.service".force =
-      true;
-  };
-
-  # Fonts
-  fonts.fontconfig.enable = true;
-
-  # Make Nix-installed graphical applications work on non-NixOS hosts. The
-  # default Mesa driver set supports AMD, Intel, and Nouveau without tying this
-  # configuration to the currently installed GPU.
-  targets.genericLinux.gpu.enable = true;
-
-  # Japanese IME (fcitx5 with mozc)
-  i18n.inputMethod = {
-    enable = true;
-    type = "fcitx5";
-    fcitx5.addons = with pkgs; [ fcitx5-mozc fcitx5-gtk ];
-  };
-
-  # home-manager managed programs
-  programs = {
-    # waybar = {
-    #   enable = true;
-    #   systemd.enable = true;
-    # };
-    # Noctalia is started by Hyprland's autostart. These settings are the
-    # declarative base layer; changes made in the settings UI are still saved
-    # to ~/.local/state/noctalia/settings.toml and win over this file.
-    #
-    # To keep UI changes:
-    #   noctalia config export > ~/tolknix/linux/dotfiles/noctalia.toml
-    #   home-manager switch --flake ~/.config/tolknix#tolki@cachyos
-    #   rm ~/.local/state/noctalia/settings.toml
-    #
-    # The rm clears the UI overrides, which would otherwise keep shadowing
-    # the same keys here.
-    noctalia = {
-      enable = true;
-      settings = ./dotfiles/noctalia.toml;
-    };
-
-    # Keep Vicinae's existing mutable config; Home Manager installs the package
-    # and owns the daemon service without generating a settings file.
-    vicinae = {
-      enable = true;
-      # Leave the existing browser native-messaging manifests untouched.
-      enableFirefoxIntegration = false;
-      systemd.enable = true;
-    };
-    # hyprlock.enable = true;
-    hyprshot.enable = true;
-  };
-
-  services = {
-    # hypridle.enable = true;
-    # hyprpaper = {
-    #   enable = false;
-    #   package = null; # Use system hyprpaper for Hyprland ABI compatibility
-    #   settings = {
-    #     ipc = "on";
-    #     splash = false;
-    #     splash_offset = 2;
-    #
-    #     preload = [
-    #       "/home/tolki/wallpapers/favorites/5g22q5.png"
-    #       "/home/tolki/wallpapers/favorites/lqx1d2.jpg"
-    #     ];
-    #
-    #     wallpaper = [
-    #       "DP-2,/home/tolki/wallpapers/favorites/5g22q5.png"
-    #       "HDMI-A-1,/home/tolki/wallpapers/favorites/lqx1d2.jpg"
-    #     ];
-    #   };
-    # };
-    # swaync.enable = true;
-  };
-  systemd = {
-    user = {
-
-      # Hyprland session target
-      # Start with: systemctl --user start hyprland-session.target
-      targets.hyprland-session.Unit = {
-        Description = "Hyprland compositor session";
-        Documentation = [ "man:systemd.special(7)" ];
-        BindsTo = [ "graphical-session.target" ];
-        Wants = [ "graphical-session-pre.target" ];
-        After = [ "graphical-session-pre.target" ];
+    timers.nix-gc = {
+      Unit.Description = "Nix Garbage Collection Timer";
+      Timer = {
+        OnCalendar = "Sun *-*-* 23:00:00";
+        Persistent = true;
       };
-
-      # Automatic garbage collection (matching macOS config)
-      services.nix-gc = {
-        Unit = { Description = "Nix Garbage Collector"; };
-        Service = {
-          Type = "oneshot";
-          ExecStart =
-            "${pkgs.nix}/bin/nix-collect-garbage --delete-older-than 30d";
-        };
-      };
-
-      timers.nix-gc = {
-        Unit = { Description = "Nix Garbage Collection Timer"; };
-        Timer = {
-          OnCalendar = "Sun *-*-* 23:00:00";
-          Persistent = true;
-        };
-        Install = { WantedBy = [ "timers.target" ]; };
-      };
+      Install.WantedBy = [ "timers.target" ];
     };
   };
-
 }

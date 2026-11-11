@@ -1,21 +1,9 @@
 { pkgs, ... }:
 
 {
-  nix = {
-
-    # Necessary for using flakes on this system.
-    enable = false;
-    # settings.experimental-features = "nix-command flakes";
-    # gc = {
-      # automatic = true;
-      # interval = {
-        # Weekday = 0;
-        # Hour = 23;
-        # Minute = 0;
-      # };
-      # options = "--delete-older-than 30d";
-    # };
-  };
+  # nix-darwin does not manage the Nix installation or its daemon here, so
+  # nix.* options such as nix.gc are unavailable; collect garbage manually.
+  nix.enable = false;
 
   # Enable fonts dir
   fonts.packages = with pkgs; [ monaspace ];
@@ -69,10 +57,14 @@
         QuitMenuItem = true;
       };
 
-      trackpad = { TrackpadThreeFingerDrag = false; };
+      trackpad = {
+        TrackpadThreeFingerDrag = false;
+      };
     };
 
-    keyboard = { enableKeyMapping = true; };
+    keyboard = {
+      enableKeyMapping = true;
+    };
   };
 
 }

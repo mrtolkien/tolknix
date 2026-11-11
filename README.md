@@ -11,26 +11,29 @@ I try to add as much of my config as possible to it, the exceptions being:
 
 ```
 tolknix/
-├── flake.nix                    # Nix flake entry point (both platforms)
+├── flake.nix                    # Entry point: both targets, formatter, checks
 ├── flake.lock                   # Dependency lockfile
-├── nix.conf                     # Nix settings
 │
-├── common/                      # Shared configurations
+├── common/                      # Shared between both platforms
+│   ├── home.nix                # Shared program configs
 │   ├── packages.nix            # CLI tools for both platforms
-│   ├── home-manager.nix        # Shared program configs
 │   └── dotfiles/               # Shared config files
 │
 ├── darwin/
 │   ├── configuration.nix       # System settings (Dock, Finder, etc.)
 │   ├── home.nix                # macOS home-manager entry
 │   ├── packages.nix            # macOS-only packages
-│   └── dotfiles/               # macOS-only dotfiles (aerospace, ...)
+│   ├── dotfiles/               # macOS-only dotfiles (aerospace, ...)
+│   └── scripts/                # AeroSpace scripts
 │
 └── linux/
     ├── home.nix                # Linux home-manager entry
-    ├── packages.nix            # Linux-only packages (etc.)
-    └── dotfiles/*              # Linux-only dotfiles
+    ├── desktop.nix             # Hyprland, Noctalia, IME, file associations
+    ├── packages.nix            # Linux-only packages
+    └── dotfiles/               # Linux-only dotfiles (hypr, noctalia, xkb)
 ```
+
+Each `dotfiles/` directory mirrors the layout of `~/.config`.
 
 ## Installation
 
@@ -49,19 +52,17 @@ cat > ~/.config/nix/nix.conf << 'EOF'
 experimental-features = nix-command flakes
 EOF
 
-git clone <repo-url> ~/.config/tolknix
-cd ~/.config/tolknix
+git clone <repo-url> tolknix
+cd tolknix
 
+# First run: home-manager is not installed yet
 nix run home-manager/master -- switch --flake .#tolki@cachyos
-
-# Actually apply your tolknix configuration
-home-manager switch --flake ~/.config/tolknix#tolki@cachyos
 ```
 
-Subsequent updates:
+Subsequent updates, from the repository root:
 
 ```bash
-home-manager switch --flake ~/.config/tolknix#tolki@cachyos
+home-manager switch --flake .#tolki@cachyos
 ```
 
 ### macOS
@@ -69,8 +70,8 @@ home-manager switch --flake ~/.config/tolknix#tolki@cachyos
 ```bash
 sh <(curl -L https://nixos.org/nix/install) --daemon
 
-git clone <repo-url> ~/.config/tolknix
-cd ~/.config/tolknix
+git clone <repo-url> tolknix
+cd tolknix
 
 sudo -H nix run nix-darwin -- switch --flake .#mbp
 ```
@@ -134,6 +135,19 @@ type zoxide
 
 ## Usage
 
+All commands run from the repository root.
+
+### Formatting and Checks
+
+```bash
+# Format every Nix file
+nix fmt
+
+# Check formatting, lint (statix, deadnix) and build this machine's
+# configuration without applying it
+nix flake check
+```
+
 ### Updating Packages (Get Latest Versions)
 
 With flakes, package versions are **pinned** in `flake.lock`. To get newer versions:
@@ -156,7 +170,7 @@ home-manager switch --flake .#tolki@cachyos
 ### Adding Packages
 
 **For both platforms:**
-Add to `common/packages.nix`
+Add to `common/packages.nix`. The package must exist on both platforms.
 
 **Platform-specific:**
 Add to `darwin/packages.nix` or `linux/packages.nix`

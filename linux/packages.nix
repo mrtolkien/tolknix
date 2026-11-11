@@ -1,18 +1,23 @@
-{ pkgs }:
+{ pkgs, ... }:
 
 # Linux-specific packages
-with pkgs; [
-  # Home manager itself (so the command is always available)
-  home-manager
-  # gearlever # AppImage manager - disabled: dwarfs build failure in nixpkgs
-  # TUI managers
-  bluetui
-  pulsemixer
-  # File manager
-  thunar
-  thunar-volman # Removable media management
-  thunar-archive-plugin
-  tumbler # Thumbnail service
-  ffmpegthumbnailer # Video thumbnails
-  loupe # Image viewer
-]
+{
+  home.packages = with pkgs; [
+    # Home manager itself (so the command is always available)
+    home-manager
+    # gearlever # AppImage manager - disabled: dwarfs build failure in nixpkgs
+    # TUI managers
+    bluetui
+    pulsemixer
+    # File manager
+    thunar
+    thunar-volman # Removable media management
+    thunar-archive-plugin
+    tumbler # Thumbnail service
+    ffmpegthumbnailer # Video thumbnails
+    loupe # Image viewer
+    dragon-drop # Drag and drop from the terminal (X11/Wayland only)
+    # Fonts (installed system-wide by nix-darwin on macOS)
+    monaspace
+  ];
+}

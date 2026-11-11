@@ -1,344 +1,107 @@
 # AGENTS.md
 
-This file provides guidance to coding agents when working with code in this repository.
+Guidance for coding agents working in this repository. See `README.md` for
+installation and day-to-day usage.
 
 ## Essential tool
 
 You have access to the Nix MCP which lets you:
 
 - Query nix packages
-- Query home assistant options
-- Search Nix doc
+- Query home-manager and nix-darwin options
+- Search Nix docs
 
 Use it extensively to validate your assumptions.
 
-## Essential Commands
+## Commands
 
-### macOS (nix-darwin)
-
-```bash
-# Apply configuration changes
-darwin-rebuild switch --flake ~/.config/tolknix#mbp
-
-# Build configuration without applying (for testing)
-darwin-rebuild build --flake ~/.config/tolknix#mbp
-
-# List generations
-darwin-rebuild --list-generations
-
-# Rollback
-darwin-rebuild switch --flake ~/.config/tolknix#mbp --rollback
-```
-
-### Linux (home-manager standalone)
+Run from the repository root.
 
 ```bash
-# Apply configuration changes
-home-manager switch --flake ~/.config/tolknix#tolki@cachyos
-
-# Build configuration without applying (for testing)
-home-manager build --flake ~/.config/tolknix#tolki@cachyos
-
-# List generations
-home-manager generations
-
-# Rollback to specific generation
-/nix/store/<generation-path>/activate
-```
-
-### Both Platforms
-
-```bash
-# Format Nix files
-nixpkgs-fmt *.nix **/*.nix
-
-# Update flake inputs
-nix flake update
-
-# Check flake
+# Format, then lint and build this machine's config without applying it
+nix fmt
 nix flake check
-nix flake show
 
-# Garbage collection
-nix-collect-garbage --delete-older-than 30d
+# Apply
+home-manager switch --flake .#tolki@cachyos   # Linux
+sudo -H darwin-rebuild switch --flake .#mbp   # macOS
 ```
 
-## Architecture Overview
+`nix flake check` runs `nixfmt --check`, `statix` and `deadnix`, and builds the
+configuration of the current platform. It must pass before committing. New
+files must be `git add`ed first, or the flake does not see them.
 
-This is a **cross-platform Nix configuration** supporting:
+## Targets
 
-- **macOS**: Full system via nix-darwin + home-manager
-- **Linux**: User environment via standalone home-manager
+| Target           | Platform | System         | User         | Scope                      |
+| ---------------- | -------- | -------------- | ------------ | -------------------------- |
+| `#mbp`           | macOS    | aarch64-darwin | garymialaret | Full system via nix-darwin |
+| `#tolki@cachyos` | Linux    | x86_64-linux   | tolki        | User environment only      |
 
-### File Structure
+## Layout
 
-**Entry Point:**
+| Path                       | Purpose                                             |
+| -------------------------- | --------------------------------------------------- |
+| `flake.nix`                | Both targets, formatter, checks                     |
+| `common/home.nix`          | Shared home-manager programs and dotfile links      |
+| `common/packages.nix`      | Install-only packages for both platforms            |
+| `darwin/configuration.nix` | nix-darwin system settings                          |
+| `darwin/home.nix`          | macOS home-manager entry                            |
+| `darwin/packages.nix`      | macOS-only packages                                 |
+| `linux/home.nix`           | Linux home-manager entry: identity, locale, Nix GC  |
+| `linux/desktop.nix`        | Hyprland, Noctalia, Vicinae, IME, MIME associations |
+| `linux/packages.nix`       | Linux-only packages                                 |
+| `*/dotfiles/`              | Config files, mirroring the layout of `~/.config`   |
+| `darwin/scripts/`          | AeroSpace scripts, linked into `~/scripts`          |
 
-- **flake.nix**: Main entry defining both `darwinConfigurations.mbp` and `homeConfigurations.tolki@cachyos`
+## Conventions
 
-**Shared Configurations (common/):**
+- Tools that need configuration or shell integration go through `programs.*`
+  in a `home.nix`; install-only tools go in a `packages.nix`.
+- Each `packages.nix` is a module setting `home.packages`. A package in
+  `common/packages.nix` must exist on both platforms; a Linux-only package
+  there breaks evaluation of the macOS target.
+- Dotfiles live at `<platform>/dotfiles/<path under ~/.config>` and are linked
+  with `xdg.configFile`.
+- Platform files import `common/home.nix` and extend it; use `lib.mkAfter` to
+  append to shared shell init.
+- Home Manager state version is 24.11 and nixpkgs follows `nixos-unstable`.
 
-- **packages.nix**: CLI tools for both platforms (fish, git, etc.)
-- **home-manager.nix**: Program configurations (shell, editors, git settings)
-- **dotfiles/**: Config files (starship, ghostty, lazygit, lsd)
-  - Uses Linux colorful starship.toml as standard
-  - Ghostty includes custom cursor shader (cursor_blaze.glsl)
+## Linux desktop
 
-**macOS-Specific (darwin/):**
-
-- **configuration.nix**: System-level Darwin config (fonts, defaults, user setup)
-- **home.nix**: macOS home-manager entry (imports common + adds overrides)
-- **packages.nix**: macOS-only packages (cocoapods)
-- **dotfiles/**: AeroSpace config, macOS-specific Ghostty settings
-- **scripts/**: AeroSpace automation scripts
-
-**Linux-Specific (linux/):**
-
-- **home.nix**: Linux home-manager entry (imports common + adds overrides)
-- **packages.nix**: Linux-only packages (solaar)
-- **dotfiles/**: Custom keyboard layout (us_macos for accents)
-- **dotfiles/hypr/**: Hyprland Lua configuration, linked file by file into
-  `~/.config/hypr/`
-
-### Key Configuration Patterns
-
-1. **Modular Structure**:
-   - Common configs define shared behavior
-   - Platform configs import common and add/override as needed
-   - Uses `lib.mkMerge` and `lib.mkAfter` for extensions
-
-2. **Dotfile Management**:
-   - Configuration files stored in respective `dotfiles/` directories
-   - Linked via `home.file` in platform-specific home.nix
-   - Common dotfiles shared, platform-specific configs separate
-
-3. **Package Management**:
-   - Shared packages in `common/packages.nix`
-   - Platform packages combined: `(common) ++ (platform)`
-
-4. **TOML Integration**:
-   - Configs use `builtins.fromTOML (builtins.readFile path)`
-   - Allows external files instead of inline Nix attrs
-
-### Platform Targets
-
-| Target           | Platform | System         | User  | Purpose                    |
-| ---------------- | -------- | -------------- | ----- | -------------------------- |
-| `#mbp`           | macOS    | aarch64-darwin | tolki | Full system via nix-darwin |
-| `#tolki@cachyos` | Linux    | x86_64-linux   | tolki | User environment only      |
-
-## User Environment
-
-### Shared Tools
-
-**Shell:**
-
-- Fish with custom abbreviations, vi mode
-- Starship prompt (colorful, multi-line, git status with emojis)
-- Atuin history (directory-based filtering)
-- Zoxide (smart directory jumper)
-- Carapace (completions)
-- Direnv (directory env vars)
-
-**Editors:**
-
-- Neovim
-
-**Terminal Tools:**
-
-- Yazi file manager (wrapper named `y`)
-- Lazygit git UI
-- LSD for directory listing
-- FZF fuzzy finder
-- Zellij multiplexer
-
-**Git:**
-
-- User: mrtolkien (gary.mialaret@gmail.com)
-- Difftastic for diffs
-- LFS enabled
-- Auto-rebase on pull
-
-### macOS-Specific
-
-**System Defaults:**
-
-- Keyboard: Fast repeat (KeyRepeat: 1, InitialKeyRepeat: 12), no press-and-hold
-- Dock: Auto-hide, left orientation, 48px tiles
-- Finder: Show all extensions, list view
-- Trackpad: Three-finger drag disabled
-
-**Shell Additions:**
-
-- PATH: Homebrew (`/opt/homebrew/bin`), Flutter, FVM, Bun
-- Abbreviations: `f` (open in Finder), `v` (Obsidian vault)
-
-**Applications:**
-
-- AeroSpace window manager (configured via dotfiles)
-
-### Linux-Specific
-
-**Shell Additions:**
-
-- PATH: Standard Linux paths + Bun, uvx
-- Home Manager installs the keyboard layout in ~/.config/xkb/symbols/us_macos
-
-**Keyboard Layout:**
-
-- Custom us_macos layout for macOS-style accents
-- AltGr-based dead keys and macOS US symbols (œ, æ, €)
-
-**Tools:**
-
-- Solaar for Logitech devices
-
-## Modifying Configuration
-
-### Adding Shared Packages
-
-Edit `common/packages.nix`:
-
-```nix
-with pkgs; [
-  # ... existing packages
-  new-package-name
-]
-```
-
-### Adding Platform-Specific Packages
-
-Edit `darwin/packages.nix` or `linux/packages.nix`
-
-### Modifying Shared Programs
-
-Edit `common/home-manager.nix`:
-
-```nix
-{
-  program-name = {
-    enable = true;
-    # ... settings
-  };
-}
-```
-
-### Adding Platform-Specific Overrides
-
-Edit `darwin/home.nix` or `linux/home.nix`:
-
-```nix
-programs.fish.shellInit = lib.mkAfter ''
-  # Platform-specific shell init
-'';
-```
-
-### Updating Dotfiles
-
-**Shared:** Edit files in `common/dotfiles/`
-**Platform-specific:** Edit files in `darwin/dotfiles/` or `linux/dotfiles/`
-
-Changes take effect on next build/switch.
-
-## Linux Configuration Ownership
-
-- Home Manager manages shell tools, editors, CLI utilities, desktop entries,
-  and selected desktop services.
-- Hyprland's Lua configuration lives in `linux/dotfiles/hypr/` and is linked
-  file by file into `~/.config/hypr/`, which stays a writable directory.
-  Hyprland itself is still installed by pacman.
+- Hyprland itself is installed by pacman. Its Lua configuration lives in
+  `linux/dotfiles/hypr/` and is linked file by file into `~/.config/hypr/`,
+  which stays a writable directory.
+- Hyprland resolves the Home Manager symlinks, so `hyprland.lua` prepends
+  `~/.config/hypr` to `package.path`; keep that at the top of the file.
 - `~/.config/hypr/noctalia.lua` is generated by Noctalia and must stay mutable;
   do not add it to this repository or put manual settings in it.
-- Noctalia's settings live in `linux/dotfiles/noctalia.toml`, installed
-  read-only as `~/.config/noctalia/config.toml`. The settings UI still works:
-  it saves overrides to `~/.local/state/noctalia/settings.toml`, which wins
-  over the Nix-managed file. To keep UI changes, run
-  `noctalia config export > linux/dotfiles/noctalia.toml`, switch, then delete
-  the state `settings.toml`.
 - `hyprland.lua` loads `~/.hypr/temp.lua` last when it exists. It is an
   unmanaged scratch file for quick tests; move what sticks into
   `linux/dotfiles/hypr/`.
+- `hypr/scripts/focus-or-launch` is called from the Vicinae Leader Key
+  configuration, not from this repository; it is not unused.
+- Noctalia's settings live in `linux/dotfiles/noctalia/config.toml`. The
+  settings UI still works: it saves overrides to
+  `~/.local/state/noctalia/settings.toml`, which wins over the Nix-managed
+  file. The comment in `linux/desktop.nix` explains how to fold UI changes
+  back in.
+- Vicinae keeps its own mutable config; Home Manager only installs it and owns
+  its service.
 - System packages that are not suitable for Nix remain managed by pacman/yay.
 
-## Important Notes
+Validate Hyprland changes after a switch:
 
-### macOS
+```bash
+hyprctl reload && hyprctl configerrors
+```
 
-- User home directory: `/Users/tolki`
-- Lazygit config in `Library/Application Support/`
-- Requires Xcode Command Line Tools
-- System-level changes require nix-darwin rebuild
+## macOS
 
-### Linux
-
-- User home directory: `/home/tolki`
-- Lazygit config in `.config/`
-- Keyboard layout installation requires sudo (prompted during switch)
-- Only user-level packages managed (system packages via pacman untouched)
-- Hyprland config is managed here; the Hyprland package is not
-
-### Both
-
-- Home Manager state version: 24.11
-- Flake uses nixos-unstable channel
-- Backup files created with `.bak` extension
-- Ghostty includes custom cursor shader (blaze effect)
-
-## Troubleshooting
-
-### Build Fails on Linux
-
-- Ensure Nix is installed: `nix --version`
-- Check flake syntax: `nix flake check`
-- Update inputs: `nix flake update`
-
-### Build Fails on macOS
-
-- Ensure nix-darwin is initialized
-- Check system is aarch64-darwin: `uname -m`
-- Verify configuration.nix syntax
-
-### Fish Config Not Loading
-
-- Check PATH: `echo $PATH | grep nix`
-- Verify fish from nix: `which fish`
-- Restart terminal/shell
-
-### Ghostty Shader Not Working
-
-- Check files exist: `ls ~/.config/ghostty/*.glsl`
-- Verify config: `cat ~/.config/ghostty/config | grep shader`
-- Reload Ghostty: Super+R
-
-### Keyboard Layout Issues (Linux)
-
-- Check installation: `ls -l ~/.config/xkb/symbols/us_macos`
-- Reinstall: Run `home-manager switch` again
-- Verify Hyprland config: `hyprctl getoption input:kb_layout`
-
-### Hyprland Config Issues (Linux)
-
-- Hyprland resolves the Home Manager symlinks, so `hyprland.lua` prepends
-  `~/.config/hypr` to `package.path`; keep that at the top of the file
-- After a switch: `hyprctl reload` then `hyprctl configerrors`
-- Check without reloading: `Hyprland --verify-config`
-- `scripts/focus-or-launch` is called from the Vicinae Leader Key
-  configuration, not from this repository; it is not unused
-
-## Development Workflow
-
-1. Edit configuration files
-2. Test build: `darwin-rebuild build` or `home-manager build`
-3. Review changes: Check what would change
-4. Apply: `darwin-rebuild switch` or `home-manager switch`
-5. If issues: Rollback to previous generation
-
-## When to Use Which File
-
-| Task              | macOS                    | Linux                         | Shared                  |
-| ----------------- | ------------------------ | ----------------------------- | ----------------------- |
-| Add CLI tool      | darwin/packages.nix      | linux/packages.nix            | common/packages.nix     |
-| Configure program | darwin/home.nix          | linux/home.nix                | common/home-manager.nix |
-| System setting    | darwin/configuration.nix | N/A                           | N/A                     |
-| Dotfile           | darwin/dotfiles/         | linux/dotfiles/               | common/dotfiles/        |
-| Window manager    | darwin/ (AeroSpace)      | linux/dotfiles/hypr/          | N/A                     |
+- The macOS target cannot be built on Linux, but it can be evaluated there:
+  `nix eval .#darwinConfigurations.mbp.system.drvPath`.
+- Without `xdg.enable`, lazygit reads its config from
+  `~/Library/Application Support/`; `common/home.nix` picks the path per
+  platform.
+- Ghostty loads `darwin.conf` through an optional include at the end of the
+  shared config.

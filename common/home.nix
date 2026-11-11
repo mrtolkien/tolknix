@@ -1,8 +1,22 @@
-{ pkgs, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 
+let
+  lazygitConfigDir =
+    if pkgs.stdenv.hostPlatform.isDarwin && !config.xdg.enable then
+      "Library/Application Support"
+    else
+      config.xdg.configHome;
+in
 {
   # Shared home-manager configuration for both macOS and Linux
   # Platform-specific configs import this and add overrides
+
+  imports = [ ./packages.nix ];
 
   news.display = "show";
   home = {
@@ -11,17 +25,21 @@
 
     # Note: nixpkgs.config is set at the system/flake level, not here
     # (darwin/configuration.nix for macOS, flake.nix for Linux)
+  };
 
-    # Shared packages
-    packages = pkgs.callPackage ./packages.nix { };
+  # Shared dotfiles; dotfiles/ mirrors the layout of ~/.config
+  xdg.configFile = {
+    "lsd/config.yaml".source = ./dotfiles/lsd/config.yaml;
+    "ghostty/config".source = ./dotfiles/ghostty/config;
+    "ghostty/cursor_blaze.glsl".source = ./dotfiles/ghostty/cursor_blaze.glsl;
+  };
 
-    # Shared dotfiles
-    file = {
-      ".config/lsd/config.yaml".source = ./dotfiles/lsd.yaml;
-      ".config/ghostty/config".source = ./dotfiles/ghostty.conf;
-      ".config/ghostty/cursor_blaze.glsl".source = ./dotfiles/cursor_blaze.glsl;
-      ".config/lazygit/config.yml".source = ./dotfiles/lazygit.yml;
-    };
+  # The Home Manager lazygit module declares this same file, at this
+  # platform-dependent path, and disables it while programs.lazygit.settings
+  # is empty. Force our YAML file in instead.
+  home.file."${lazygitConfigDir}/lazygit/config.yml" = {
+    enable = lib.mkForce true;
+    source = lib.mkForce ./dotfiles/lazygit/config.yml;
   };
 
   # Program configurations
@@ -47,7 +65,9 @@
         # Add Nix profile to PATH first (critical for home-manager packages)
         fish_add_path ~/.nix-profile/bin
         fish_add_path /nix/var/nix/profiles/default/bin
-        fish_add_path fish_add_path $(go env GOBIN)
+        if command -q go
+            fish_add_path (go env GOBIN)
+        end
 
         function fish_greeting
             fastfetch
@@ -60,7 +80,9 @@
 
         fish_add_path $BUN_INSTALL/bin # bun
         fish_add_path ~/.local/bin # uvx
-        source "$HOME/.cargo/env.fish"
+        if test -f "$HOME/.cargo/env.fish"
+            source "$HOME/.cargo/env.fish"
+        end
 
         # Platform-specific PATHs added in platform configs
       '';
@@ -69,7 +91,7 @@
     # Shell enhancements
     fzf = {
       enable = true;
-      historyWidget.command="";
+      historyWidget.command = "";
     };
     lsd.enable = true;
     direnv.enable = true;
@@ -101,7 +123,9 @@
     git = {
       enable = true;
       ignores = [ "*.swp" ];
-      lfs = { enable = true; };
+      lfs = {
+        enable = true;
+      };
       signing.format = null;
       settings = {
         user = {
@@ -156,7 +180,10 @@
       shellWrapperName = "y";
 
       settings = {
-        mgr = { show_hidden = true; linemode = "mtime"; };
+        mgr = {
+          show_hidden = true;
+          linemode = "mtime";
+        };
         preview = {
           max_width = 1000;
           max_height = 1000;
