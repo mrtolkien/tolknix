@@ -49,7 +49,8 @@ files must be `git add`ed first, or the flake does not see them.
 | `darwin/home.nix`          | macOS home-manager entry                            |
 | `darwin/packages.nix`      | macOS-only packages                                 |
 | `linux/home.nix`           | Linux home-manager entry: identity, locale, Nix GC  |
-| `linux/desktop.nix`        | Hyprland, Noctalia, Vicinae, IME, MIME associations |
+| `linux/desktop.nix`        | Hyprland, Noctalia, IME, MIME associations          |
+| `linux/vicinae.nix`        | Vicinae daemon, settings, Leader Key extension      |
 | `linux/packages.nix`       | Linux-only packages                                 |
 | `*/dotfiles/`              | Config files, mirroring the layout of `~/.config`   |
 | `darwin/scripts/`          | AeroSpace scripts, linked into `~/scripts`          |
@@ -86,8 +87,13 @@ files must be `git add`ed first, or the flake does not see them.
   `~/.local/state/noctalia/settings.toml`, which wins over the Nix-managed
   file. The comment in `linux/desktop.nix` explains how to fold UI changes
   back in.
-- Vicinae keeps its own mutable config; Home Manager only installs it and owns
-  its service.
+- Vicinae settings are declared in `linux/vicinae.nix` with `mutableSettings`:
+  they override `~/.config/vicinae/settings.json`, which stays writable. A GUI
+  change to a declared key is shadowed; fold it into the Nix file.
+- The Leader Key extension is built by Nix. Its shortcut tree lives in
+  Vicinae's database, not in a file: `linux/dotfiles/vicinae/leader-key.json`
+  is the managed copy. Load it with the extension's Import Config command, and
+  refresh it with Export Config after editing shortcuts in the UI.
 - System packages that are not suitable for Nix remain managed by pacman/yay.
 
 Validate Hyprland changes after a switch:

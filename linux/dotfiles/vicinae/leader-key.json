@@ -1,0 +1,59 @@
+{
+  "type": "group",
+  "actions": [
+    {
+      "key": "o",
+      "type": "command",
+      "value": "obsidian",
+      "label": "Obsidian"
+    },
+    {
+      "key": "e",
+      "type": "command",
+      "value": "dolphin",
+      "label": "Dolphin"
+    },
+    {
+      "key": "w",
+      "type": "command",
+      "value": "firefox",
+      "label": "Firefox"
+    },
+    {
+      "key": "t",
+      "type": "command",
+      "value": "/home/tolki/.config/hypr/scripts/focus-or-launch '^todoist$' -- flatpak run com.todoist.Todoist",
+      "label": "Todoist"
+    },
+    {
+      "key": "b",
+      "type": "command",
+      "value": "/home/tolki/.config/hypr/scripts/focus-or-launch '^Beeper$' -- beeper",
+      "label": "Beeper"
+    },
+    {
+      "key": "c",
+      "type": "command",
+      "value": "/home/tolki/.config/hypr/scripts/focus-or-launch '^com[.]t3tools[.]T3Code$' -- t3code",
+      "label": "T3 Code"
+    },
+    {
+      "key": "d",
+      "type": "command",
+      "value": "/home/tolki/.config/hypr/scripts/focus-or-launch '^(discord|com[.]discordapp[.]Discord)$' -- flatpak run  com.discordapp.Discord",
+      "label": "Discord"
+    },
+    {
+      "key": "m",
+      "type": "command",
+      "value": "/home/tolki/.config/hypr/scripts/focus-or-launch '^com[.]github[.]th-ch[.]youtube-music$' -- pear-desktop",
+      "label": "YouTube Music"
+    },
+    {
+      "key": "a",
+      "type": "command",
+      "value": "noctalia msg notification-invoke-latest",
+      "label": "Activate Notification"
+    }
+  ]
+}

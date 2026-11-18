@@ -57,6 +57,7 @@ in
         dps = "docker ps";
         l = "lazygit";
         n = "nvim";
+        u = "cd ~/.local/share/uraeda/Uraeda";
         # Platform-specific abbreviations added in platform configs
       };
 
@@ -178,6 +179,49 @@ in
     yazi = {
       enable = true;
       shellWrapperName = "y";
+
+      keymap.mgr.prepend_keymap = [
+        {
+          on = [
+            "g"
+            "p"
+          ];
+          run = "cd ~/Pictures/";
+        }
+        {
+          on = [
+            "g"
+            "f"
+          ];
+          run = "cd ~/Documents/";
+        }
+        {
+          on = [
+            "g"
+            "n"
+          ];
+          run = "cd ~/Development/";
+        }
+        {
+          on = "<C-n>";
+          run = "shell -- dragon-drop -x -i -T %h";
+        }
+        {
+          on = [
+            "g"
+            "r"
+          ];
+          run = ''shell -- ya emit cd "$(git rev-parse --show-toplevel)"'';
+        }
+        {
+          on = [
+            "g"
+            "u"
+          ];
+          run = "cd ~/.local/share/uraeda/Uraeda";
+          desc = "Go to Uraeda";
+        }
+      ];
 
       settings = {
         mgr = {

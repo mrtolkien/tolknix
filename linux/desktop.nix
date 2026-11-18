@@ -133,15 +133,6 @@ in
       settings = ./dotfiles/noctalia/config.toml;
     };
 
-    # Keep Vicinae's existing mutable config; Home Manager installs the package
-    # and owns the daemon service without generating a settings file.
-    vicinae = {
-      enable = true;
-      # Leave the existing browser native-messaging manifests untouched.
-      enableFirefoxIntegration = false;
-      systemd.enable = true;
-    };
-
     hyprshot.enable = true;
   };
 

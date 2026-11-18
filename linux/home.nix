@@ -7,6 +7,7 @@
     ../common/home.nix
     ./packages.nix
     ./desktop.nix
+    ./vicinae.nix
   ];
 
   home = {
